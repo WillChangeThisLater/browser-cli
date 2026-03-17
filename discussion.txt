@@ -1,0 +1,2782 @@
+
+ [y18.svg][1]-[y18.svg] [2]Hacker News[3]new[4] | past[5] | comments[6]
+                           | ask[7] | show[8] | jobs[9] | submit[10]   login
+
+   Chrome DevTools MCP (2025)[12] (chrome.com[13])
+   566 points by xnx[14] 1 day ago[15] | hide[16] | past[17] |
+   favorite[18] | 226 comments[19]
+
+   [20]___________________________________________________________
+   [21]___________________________________________________________
+   [22]___________________________________________________________
+   [23]___________________________________________________________
+   [24]___________________________________________________________
+   [25]___________________________________________________________
+   [26]___________________________________________________________
+   [27]___________________________________________________________
+    help[28]
+   [29]add comment
+
+
+   [s.gif]
+
+   dataviz1000[31] 23 hours ago[32] | next[33] [–][34]
+   I use Playwright to intercept all requests and responses and have
+   Claude Code navigate to a website like YouTube and click and interact
+   with all the elements and inputs while recording all the requests and
+   responses associated with each interaction. Then it creates a detailed
+   strongly typed API to interact with any website using the underlying
+   API.
+
+   Yes, I know it likely breaks everybody's terms of service but at the
+   same time I'm not loading gigabytes of ads, images, markup, to
+   accomplish things.
+
+   If anyone is interested I can take some time and publish it this week.
+
+   reply[35]
+
+   [s.gif]
+
+   felarof[37] 1 hour ago[38] | parent[39] | next[40] [–][41]
+   I do this via BrowserOS --
+   https://github.com/browseros-ai/BrowserOS[42]
+
+   It has an in-built MCP server and I use it with claude code, codex and
+   like it quite a lot.
+
+   reply[43]
+
+   [s.gif]
+
+   bredren[45] 21 hours ago[46] | parent[47] | prev[48] | next[49] [–][50]
+   I also do this. My primary use case is for reproducing page layout and
+   styling at any given tree in the dom. So, capturing various states of a
+   component etc.
+
+   I also use it to automatically retrieve page responsiveness behavior in
+   complex web apps. It uses playwright to adjust the width and monitor
+   entire trees for exact changes which it writes structured data that
+   includes the complete cascade of styles relevant with screenshots to
+   support the snapshots.
+
+   There are tools you can buy that let you do this kind of inspection
+   manually, but they are designed for humans. So, lots of
+   clickety-clackety and human speed results.
+
+   ---
+
+   My first reaction to seeing this FP was why are people still releasing
+   MCPs? So far I've managed to completely avoid that hype loop and went
+   straight to building custom CLIs even before skills were a thing.
+
+   I think people are still not realizing the power and efficiency of
+   direct access to things you want and skills to guide the AI in using
+   the access effectively.
+
+   Maybe I'm missing something in this particular use case?
+
+   reply[51]
+
+   [s.gif]
+
+   ranyume[53] 4 hours ago[54] | root[55] | parent[56] | next[57] [–][58]
+   > My first reaction to seeing this FP was why are people still
+   releasing MCPs?
+
+   MCPs are more difficult to use. You need to use an agent to use the
+   tools, can't do it manually easily. I wonder if some people see that
+   friction as a feature.
+
+   reply[59]
+
+   [s.gif]
+
+   AlphaSite[61] 17 hours ago[62] | root[63] | parent[64] | prev[65] |
+   next[66] [–][67]
+   its mostly because MCPs handle auth in a standardised way and give you
+   a framework you can layer things like auth, etc on top of.
+
+   Without it youre stuck with the basic http firewall, etc which is
+   extremely dangerous and this is maybe the 1 opportunity we have to do
+   this.
+
+   reply[68]
+
+   [s.gif]
+
+   re5i5tor[70] 7 hours ago[71] | root[72] | parent[73] | next[74] [–][75]
+   And people forget, Claude Code isn’t the only Claude surface, and CLIs
+   don’t help in other surfaces other than Cowork.
+
+   reply[76]
+
+   [s.gif]
+
+   halJordan[78] 20 hours ago[79] | parent[80] | prev[81] | next[82]
+   [–][83]
+   I love how HN is loving this idea when it's the exact same thing
+   Anthropic and OpenAi (and every other llm maker) did.
+
+   It's God's gift to them when it lets them bypass ads and dl copyrighted
+   material. But it's Satan's curse on humanity when the Zuck does it to
+   train his llm and dl copyrighted material.
+
+   reply[84]
+
+   [s.gif]
+
+   deaux[86] 19 hours ago[87] | root[88] | parent[89] | next[90] [–][91]
+   Both scale and purpose make them completely different things. You're
+   acting as if they're the same when they're not.
+
+   reply[92]
+
+   [s.gif]
+
+   joks[94] 1 hour ago[95] | root[96] | parent[97] | prev[98] | next[99]
+   [–][100]
+   I think there's a little bit of the Goomba fallacy at play here to be
+   fair
+
+   reply[101]
+
+   [s.gif]
+
+   eipi10_hn[103] 17 hours ago[104] | root[105] | parent[106] | prev[107]
+   | next[108] [–][109]
+   I won't comment about dl but ads are trackers and spyware for me. I
+   don't spy on websites' owners, I have my human rights to stop those
+   trackers.
+
+   Zuck serves ads/spywares to other users, he deserves to taste his own
+   medicines, not me.
+
+   reply[110]
+
+   [s.gif]
+
+   coldtea[112] 9 hours ago[113] | root[114] | parent[115] | prev[116] |
+   next[117] [–][118]
+   Yes, it's a god's gift when the average user can do it, and satan's
+   curse what a hated fucking mega-corp is doing it.
+
+   Where's the contradiction?
+
+   reply[119]
+
+   [s.gif]
+
+   friendzis[121] 13 hours ago[122] | root[123] | parent[124] | prev[125]
+   | next[126] [–][127]
+   You can see this pattern in many different topics: updoots are highly
+   correlated with a positive answer to "do I personally get to profit"?
+
+   reply[128]
+
+   [s.gif]
+
+   achierius[130] 13 hours ago[131] | root[132] | parent[133] | next[134]
+   [–][135]
+   Yes, and? People need to eat. Billionaires are generally not interested
+   in whether or not the average Joe gets to eat.
+
+   reply[136]
+
+   [s.gif]
+
+   cyberax[138] 16 hours ago[139] | root[140] | parent[141] | prev[142] |
+   next[143] [–][144]
+   I would love to pay for content. I'm _paying_ for YouTube Premium.
+
+   But heck. Do I hate the YouTube interface, it degraded far past
+   usability.
+
+   reply[145]
+
+[s.gif]
+
+             zx8080[147] 15 hours ago[148] | root[149] | parent[150] | next[151]
+             [–][152]
+             Write to their support. Oh, wait.
+
+             reply[153]
+
+   [s.gif]
+
+   tclancy[155] 19 hours ago[156] | root[157] | parent[158] | prev[159] |
+   next[160] [–][161]
+   So you’re that Hal Jordan then? Why would a Green Lantern feel the need
+   to defend either? I feel like the Guardians would not accept your
+   arguments as soon as you got to Oa, poozer. I guess what I am saying is
+   don’t have a famous name. Seems obvious.
+
+   reply[162]
+
+[s.gif]
+
+             llbbdd[164] 19 hours ago[165] | root[166] | parent[167] | next[168]
+             [–][169]
+             OP appears to be talking about real life. What are you on about?
+
+             reply[170]
+
+   [s.gif]
+
+   bryanrasmussen[172] 17 hours ago[173] | root[174] | parent[175] |
+   next[176] [–][177]
+   the user name he is responding to is HalJordan, Hal Jordan is the name
+   of a comic book superhero: Green Lantern, a moral paragon.
+
+   on edit: he is evidently being "sarcastic"
+
+   reply[178]
+
+   [s.gif]
+
+   miki123211[180] 11 hours ago[181] | root[182] | parent[183] | prev[184]
+   | next[185] [–][186]
+   You conflate web crawling for inference with web crawling for training.
+
+   Web crawling for training is when you ingest content on a mass scale,
+   usually indiscriminately, usually with a dumb crawler for scale's sake,
+   for the purposes of training an LLM. You don't really care whether one
+   particular website is in the dataset (unless it's the size of Reddit),
+   you just want a large, diverse, high-quality data mix.
+
+   Web crawling for inference is when a user asks a targeted question, you
+   do a web search, and fetch exactly those resources that are likely to
+   be relevant to that search. Nothing ends up in the training data, it's
+   just context enrichment.
+
+   People have a much larger issue with crawling for training than for
+   inference (though I personally think both are equally ok).
+
+   reply[187]
+
+   [s.gif]
+
+   sidwyn[189] 2 hours ago[190] | parent[191] | prev[192] | next[193]
+   [–][194]
+   I do something similar [1] but it leverages WebMCP (see Amazon example
+   [2]). Could probably turn it into a strongly typed API.
+
+   [1] https://github.com/sidwyn/webmcp-tool-library[195]
+
+   [2]
+   https://github.com/sidwyn/webmcp-tool-library/blob/main/cont...[196]
+
+   reply[197]
+
+[s.gif]
+
+             Axsuul[199] 22 hours ago[200] | parent[201] | prev[202] | next[203]
+             [–][204]
+             Why even use Playwright for this? I feel like Claude just needs
+             agent-browser and it can generate deterministic code from it.
+
+             reply[205]
+
+   [s.gif]
+
+   dsrtslnd23[207] 21 hours ago[208] | root[209] | parent[210] | next[211]
+   [–][212]
+   you mean this one? https://github.com/vercel-labs/agent-browser[213]
+
+   reply[214]
+
+   [s.gif]
+
+   dataviz1000[216] 21 hours ago[217] | root[218] | parent[219] |
+   next[220] [–][221]
+   It is 2 months old!
+
+   My excuse for not keeping up is that I'm in so deep that Claude Code
+   can predict the stock market.
+
+   I'll still publish mine and see if has any value but agent browser
+   looks very complete.
+
+   Thank you for sharing!
+
+   reply[222]
+
+   [s.gif]
+
+   botanrice[224] 3 hours ago[225] | root[226] | parent[227] | next[228]
+   [–][229]
+   I'm curious, have you developed your own reasoning system for how
+   Claude can predict the stock market? Or have you trained it on past
+   data combined with news sources?
+
+   reply[230]
+
+   [s.gif]
+
+   bartek_gdn[232] 21 hours ago[233] | root[234] | parent[235] | prev[236]
+   | next[237] [–][238]
+   Yes please, maybe there will be some solution that will fit the problem
+   better! I recently released something similar, and because of the small
+   API, I'm more comfortable using it.
+
+   https://news.ycombinator.com/item?id=47207790[239]
+
+   reply[240]
+
+   [s.gif]
+
+   Barbing[242] 15 hours ago[243] | root[244] | parent[245] | prev[246] |
+   next[247] [–][248]
+   >I'm in so deep that Claude Code can predict the stock market.
+
+   “What?”, more polite than “yeah right” :)
+
+   (oh I guess obviously it would have a chance at nailing it for weeks in
+   a row, and have more good years than bad—since actively managed funds
+   can pull that off until, universally, they can’t [beat the market])
+
+   reply[249]
+
+   [s.gif]
+
+   djsavvy[251] 7 hours ago[252] | root[253] | parent[254] | prev[255] |
+   next[256] [–][257]
+   > Claude Code can predict the stock market.
+
+   Please say more!
+
+   reply[258]
+
+[s.gif]
+
+             citizenpaul[260] 16 hours ago[261] | root[262] | parent[263] |
+             prev[264] | next[265] [–][266]
+             >I'm in so deep that Claude Code can predict the stock market.
+
+             What?
+
+             reply[267]
+
+   [s.gif]
+
+   thefreeman[269] 18 hours ago[270] | root[271] | parent[272] | prev[273]
+   | next[274] [–][275]
+   You can just start claude with the —chrome flag too and it will connect
+   to the chrome extension.
+
+   reply[276]
+
+[s.gif]
+
+             kolinko[278] 9 hours ago[279] | parent[280] | prev[281] | next[282]
+             [–][283]
+             Please do.
+
+             Did you compare playwright with mcp? Why one over another?
+
+             I use MCP usually, because I heard it’s less detectable than
+             playwright, and more robust against design changes, but I didn’t
+             compare/test myself
+
+             reply[284]
+
+   [s.gif]
+
+   schainks[286] 22 hours ago[287] | parent[288] | prev[289] | next[290]
+   [–][291]
+   Very interested. Would even pay for an api for this. I am doing
+   something similar with vibium and need something more token efficient.
+
+   reply[292]
+
+[s.gif]
+
+             hugs[294] 15 hours ago[295] | root[296] | parent[297] | next[298]
+             [–][299]
+             have you tried vibium's cli + agent skill?
+
+             reply[300]
+
+[s.gif]
+
+             swyx[302] 1 hour ago[303] | parent[304] | prev[305] | next[306]
+             [–][307]
+             yes please! i need a "comment to follow" functionality on HN
+
+             reply[308]
+
+[s.gif]
+
+             defen[310] 22 hours ago[311] | parent[312] | prev[313] | next[314]
+             [–][315]
+             Would this hypothetically be able to download arbitrary videos from
+             youtube without the constant yt-dlp arms race?
+
+             reply[316]
+
+   [s.gif]
+
+   dawnerd[318] 22 hours ago[319] | root[320] | parent[321] | next[322]
+   [–][323]
+   Don’t know how this could be more stable than ytdlp. When issues come
+   up they’re fixed really quickly.
+
+   reply[324]
+
+   [s.gif]
+
+   varenc[326] 22 hours ago[327] | root[328] | parent[329] | next[330]
+   [–][331]
+   yt-dlp was very recently broken for ~2 days for any Youtube videos that
+   required cookies: https://github.com/yt-dlp/yt-dlp/issues/16212[332]
+
+   Here is what actually fixed it:
+   https://github.com/yt-dlp/ejs/pull/53/changes[333]
+
+   yt-dlp is relatively stable, but still occasionally breaks for long
+   periods. I get the sense YouTube is becoming increasingly adversarial
+   to yt-dlp as well.
+
+   I don't know the details, but it doesn't seem like yt-dlp is running
+   the entire YouTube JS+DOM environment. Something like a real headless
+   browser seems like it would break less often, but be much heavier
+   weight. And Youtube might have all sorts of other mitigations against
+   this approach.
+
+   reply[334]
+
+   [s.gif]
+
+   22c[336] 18 hours ago[337] | root[338] | parent[339] | next[340]
+   [–][341]
+   > yt-dlp is running the entire YouTube JS+DOM environment
+
+   IIRC they maintain a minimal execution environment that is able to run
+   just the JS needed to pass a few checks but this breaks too often
+   enough that they're planning to make Node.js or another JS interpreter
+   a hard requirement (possibly already happened).
+
+   reply[342]
+
+   [s.gif]
+
+   defrost[344] 18 hours ago[345] | root[346] | parent[347] | next[348]
+   [–][349]
+   Pretty much - yt-dlp currently requires Deno to "solve" youtube
+   challenges.
+
+   * https://deno.com/[350]
+
+   * there may well be other JS interpreters that are accepted, can be
+   used - but solving JS challenges is required for much, if not all, YT
+   content.
+
+   reply[351]
+
+   [s.gif]
+
+   zipping1549[353] 17 hours ago[354] | root[355] | parent[356] |
+   prev[357] | next[358] [–][359]
+   > const url =
+   (${generate(expression)})("https://youtube.com/watch?v=yt-dlp-wins[360]
+   ", "s", sig);
+
+   I'm pretty sure yt-dlp is filled with these kinds of gold.
+
+   reply[361]
+
+   [s.gif]
+
+   coro_1[363] 19 hours ago[364] | root[365] | parent[366] | prev[367] |
+   next[368] [–][369]
+   > I get the sense YouTube is becoming increasingly adversarial to
+   yt-dlp as well.
+
+   I rarely use yt-dlp anymore.
+
+   Before I just updated. Now when I do that, it usually becomes complex
+   and full of questions.
+
+   reply[370]
+
+   [s.gif]
+
+   toomuchtodo[372] 21 hours ago[373] | root[374] | parent[375] |
+   prev[376] | next[377] [–][378]
+   I think having a hook to an LLM endpoint to enable yt-dlp to attempt to
+   self resolve until an official fix is available would be a useful
+   enhancement.
+
+   reply[379]
+
+   [s.gif]
+
+   dataviz1000[381] 22 hours ago[382] | root[383] | parent[384] |
+   prev[385] | next[386] [–][387]
+   > yt-dlp arms race
+
+   I don't know anything about yt-dlp.
+
+   It would probably help people who want to go to a concert and have a
+   chance to beat the scalpers cornering the market on an event in 30
+   seconds hitting the marketplace services with 20,000 requests.
+
+   I can try to see if can bypass yt-dlp. But that is always a cat and
+   mouse game.
+
+   reply[388]
+
+[s.gif]
+
+             defen[390] 22 hours ago[391] | root[392] | parent[393] | next[394]
+             [–][395]
+             To clarify - yt-dlp is a command line tool for downloading youtube
+             videos, but it's in a constant arms race with the youtube website
+             because they are constantly changing things in a way that blocks
+             yt-dlp.
+
+             reply[396]
+
+   [s.gif]
+
+   dexterdog[398] 20 hours ago[399] | root[400] | parent[401] | next[402]
+   [–][403]
+   I wouldn't call it an arms race. I don't update my client that often
+   and I rarely have problems downloading any video with it.
+
+   reply[404]
+
+[s.gif]
+
+             phantomathkg[406] 18 hours ago[407] | root[408] | parent[409] |
+             prev[410] | next[411] [–][412]
+             If it can save all the video/audio fragment and call ffmpeg to join
+             them together. Maybe?
+
+             reply[413]
+
+   [s.gif]
+
+   cbility[415] 7 hours ago[416] | parent[417] | prev[418] | next[419]
+   [–][420]
+   I use chrome devtools MCP to the same end - it works great for me.
+   Interested in what advantages you see in using Playwright over chrome
+   devtools?
+
+   reply[421]
+
+   [s.gif]
+
+   Johnny_Bonk[423] 22 hours ago[424] | parent[425] | prev[426] |
+   next[427] [–][428]
+   Yes, please do and ping me when it's done lol. Did you make it into an
+   agent skill?
+
+   reply[429]
+
+   [s.gif]
+
+   dataviz1000[431] 22 hours ago[432] | root[433] | parent[434] |
+   next[435] [–][436]
+   Exactly, it is an agent skill that interacts pressing buttons and stuff
+   with a webpage capturing and documenting all the API requests the page
+   makes using Playwright's request / response interception methods. It
+   creates and strongly typed well documented API at the end.
+
+   reply[437]
+
+   [s.gif]
+
+   bengt[439] 22 hours ago[440] | root[441] | parent[442] | next[443]
+   [–][444]
+   Sounds awesome. I've been using mitmproxy's --mode local to intercept
+   with a separate skill to read flow files dumped from it, but
+   interactive is even better.
+
+   reply[445]
+
+   [s.gif]
+
+   miohtama[447] 20 hours ago[448] | parent[449] | prev[450] | next[451]
+   [–][452]
+   I just ask Claude to reverse engineer the site with Chrome MCP. It goes
+   to work by itself, uses your Chrome logged in session cookies, etc.
+
+   reply[453]
+
+   [s.gif]
+
+   mistyvales[455] 3 hours ago[456] | parent[457] | prev[458] | next[459]
+   [–][460]
+   I would like to see this!
+
+   reply[461]
+
+[s.gif]
+
+             zacmps[463] 11 hours ago[464] | parent[465] | prev[466] | next[467]
+             [–][468]
+             I would love it if you had time to publish it!
+
+             reply[469]
+
+   [s.gif]
+
+   mikrl[471] 21 hours ago[472] | parent[473] | prev[474] | next[475]
+   [–][476]
+   I was doing similar by capturing XHR requests while clicking through
+   manually, then asking codex to reverse engineer the API from the
+   export.
+
+   Never tried that level of autonomy though. How long is your iteration
+   cycle?
+
+   If I had to guess, mine was maybe 10-20 minutes over a few prompts.
+
+   reply[477]
+
+   [s.gif]
+
+   bheadmaster[479] 6 hours ago[480] | parent[481] | prev[482] | next[483]
+   [–][484]
+   I am EXTREMELY interested. Please publish it.
+
+   reply[485]
+
+   [s.gif]
+
+   rkagerer[487] 16 hours ago[488] | parent[489] | prev[490] | next[491]
+   [–][492]
+   I assume you're not logged into those sites, in order to avoid bans and
+   the risk of hitting the wrong button like, say, "Delete Account".
+
+   reply[493]
+
+   [s.gif]
+
+   dataviz1000[495] 16 hours ago[496] | root[497] | parent[498] |
+   next[499] [–][500]
+   It turns any authenticated browser session into a fully typed REST API
+   proxy — exposing discovered endpoints as local Hono routes that relay
+   requests through the browser, so cookies and auth are automatic.
+
+   The point is that it creates an API proxy in code that a Typescript
+   server calls directly. The AI runs for about 10 minutes with codegen.
+   The rest of the time it is just API calls to a service. Remove the
+   endpoint for "Delete Account" and that API endpoint never gets called.
+
+   This 100% breaks everyone's terms of service. I would not recommend nor
+   encourage using.
+
+   reply[501]
+
+   [s.gif]
+
+   3abiton[503] 13 hours ago[504] | parent[505] | prev[506] | next[507]
+   [–][508]
+   I always used playwrite as an alternative to selenium, relatively
+   surprised by its ability to interface with LLMs.
+
+   reply[509]
+
+   [s.gif]
+
+   TimCTRL[511] 10 hours ago[512] | parent[513] | prev[514] | next[515]
+   [–][516]
+   +1, publish, but how will we know when you have published...
+
+   reply[517]
+
+[s.gif]
+
+             xrd[519] 23 hours ago[520] | parent[521] | prev[522] | next[523]
+             [–][524]
+             Yes, please do!
+
+             reply[525]
+
+   [s.gif]
+
+   dataviz1000[527] 22 hours ago[528] | root[529] | parent[530] |
+   next[531] [–][532]
+   100% I'll response to this by Friday with link to Github.
+
+   I use Patchright + Ghostery and I have a cleaver tool that uses web
+   sockets to pass 1 second interval screenshots to the a dashboard and
+   pointer / keyboard events to the server which allow interacting with
+   websites so that a user can create authentication that is stored in the
+   chrome user profile with all the cookies, history, local storage, ect..
+   in the cloud on a server.
+
+   Can you list some websites that don't require subscription that you
+   would like to me to test against? I used this for Robinhood and I think
+   Linked in would be a good example for people to use.
+
+   reply[533]
+
+   [s.gif]
+
+   botanrice[535] 3 hours ago[536] | root[537] | parent[538] | next[539]
+   [–][540]
+   Would you be open to sharing your Github profile now so I could follow
+   you? I don't check on here very often.
+
+   reply[541]
+
+   [s.gif]
+
+   zzleeper[543] 22 hours ago[544] | root[545] | parent[546] | prev[547] |
+   next[548] [–][549]
+   Another +1, it would be incredibly useful to play with this approach!
+   (and fun)
+
+   reply[550]
+
+[s.gif]
+
+             citizenpaul[552] 16 hours ago[553] | parent[554] | prev[555] |
+             next[556] [–][557]
+             Id like to see this published as well thx!
+
+             reply[558]
+
+   [s.gif]
+
+   liamdgray[560] 21 hours ago[561] | parent[562] | prev[563] | next[564]
+   [–][565]
+   Please do!
+
+   reply[566]
+
+[s.gif]
+
+             toomuchtodo[568] 21 hours ago[569] | parent[570] | prev[571] |
+             next[572] [–][573]
+             Please publish!
+
+             reply[574]
+
+   [s.gif]
+
+   heystefan[576] 20 hours ago[577] | parent[578] | prev[579] | next[580]
+   [–][581]
+   Commenting to follow up.
+
+   reply[582]
+
+   [s.gif]
+
+   fuzzyfizz[584] 13 hours ago[585] | parent[586] | prev[587] | next[588]
+   [–][589]
+   Wow. Yes please.
+
+   reply[590]
+
+   [s.gif]
+
+   retinaros[592] 22 hours ago[593] | parent[594] | prev[595] | next[596]
+   [–][597]
+   isnt it what everyone that needs web validation does?
+
+   reply[598]
+
+   [s.gif]
+
+   paulirish[600] 22 hours ago[601] | prev[602] | next[603] [–][604]
+   The DevTools MCP project just recently landed a standalone CLI:
+   https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/m...[605]
+
+   Great news to all of us keenly aware of MCP's wild token costs. ;)
+
+   The CLI hasn't been announced yet (sorry guys!), but it is shipping in
+   the latest v0.20.0 release. (Disclaimer: I used to work on the DevTools
+   team. And I still do, too)
+
+   reply[606]
+
+   [s.gif]
+
+   hank1931[608] 18 hours ago[609] | parent[610] | next[611] [–][612]
+   Love the Mitch Hedberg reference! Thank you! Always good to get a
+   little Mitch!
+
+   ‘I don’t have a girlfriend. But I do know a woman who’d be mad at me
+   for saying that.’
+
+   ‘I’m against picketing, but I don’t know how to show it.’
+
+   ‘I haven’t slept for ten days, because that would be too long.’
+
+   ‘I like to play blackjack. I’m not addicted to gambling. I’m addicted
+   to sitting in a semi-circle.’
+
+   reply[613]
+
+   [s.gif]
+
+   paulirish[615] 18 hours ago[616] | root[617] | parent[618] | next[619]
+   [–][620]
+   "I was going to get my teeth whitened but then I said, fuck that, I'll
+   just get a tan instead."
+
+   reply[621]
+
+   [s.gif]
+
+   abhikul0[623] 3 hours ago[624] | parent[625] | prev[626] | next[627]
+   [–][628]
+   It doesn't seem to work, tried the -u flag with the default address and
+   it just couldn't connect to the existing chrome instance.
+
+   reply[629]
+
+   [s.gif]
+
+   dreadnip[631] 10 hours ago[632] | parent[633] | prev[634] | next[635]
+   [–][636]
+   The big upside of the MCP is that it connects to already open browser
+   windows. I tried the skill but it always tries to open new windows. Is
+   there a way to get the `--autoConnect` behaviour with the CLI?
+
+   reply[637]
+
+   [s.gif]
+
+   albert_e[639] 18 hours ago[640] | parent[641] | prev[642] | next[643]
+   [–][644]
+   Woah got this for the first time.
+
+   > Too many requests
+
+   You have exceeded a secondary rate limit.
+
+   Please wait a few minutes before you try again; in some cases this may
+   take up to an hour. Signing in may provide a higher rate limit if you
+   are not already signed in.
+
+   For more on scraping GitHub and how it may affect your rights, please
+   review our Terms of Service.
+
+   reply[645]
+
+[s.gif]
+
+             commanderkeen08[647] 22 hours ago[648] | parent[649] | prev[650] |
+             next[651] [–][652]
+             MCPs cost nothing in CC now with Tool Search.
+
+             reply[653]
+
+   [s.gif]
+
+   cheema33[655] 22 hours ago[656] | root[657] | parent[658] | next[659]
+   [–][660]
+   > MCPs cost nothing in CC now with Tool Search.
+
+   This is incorrect. Plenty of people have run the numbers. Tool search
+   does not fix all problems with MCP.
+
+   reply[661]
+
+   [s.gif]
+
+   ehsanu1[663] 21 hours ago[664] | root[665] | parent[666] | next[667]
+   [–][668]
+   What are the numbers? Are there problems other than context usage you
+   refer to?
+
+   reply[669]
+
+   [s.gif]
+
+   lewisjoe[671] 16 hours ago[672] | root[673] | parent[674] | prev[675] |
+   next[676] [–][677]
+   Can you elaborate more?
+
+   reply[678]
+
+[s.gif]
+
+             wahnfrieden[680] 22 hours ago[681] | root[682] | parent[683] |
+             prev[684] | next[685] [–][686]
+             Codex also has this…
+
+             reply[687]
+
+   [s.gif]
+
+   aadishv[689] 1 day ago[690] | prev[691] | next[692] [–][693]
+   Someone already made a great agent skill for this, which I'm using
+   daily, and it's been very cool!
+
+   https://github.com/pasky/chrome-cdp-skill[694]
+
+   For example, I use codex to manage a local music library, and it was
+   able to use the skill to open a YT Music tab in my browser, search for
+   each album, and get the URL to pass to yt-dlp.
+
+   Do note that it only works for Chrome browsers rn, so you have to edit
+   the script to point to a different Chromium browser's binary (e.g. I
+   use Helium) but it's simple enough
+
+   reply[695]
+
+   [s.gif]
+
+   Etheryte[697] 1 day ago[698] | parent[699] | next[700] [–][701]
+   On one hand, cool demo, on the other, this is horrifying in more ways
+   than I can begin to describe. You're literally one prompt injection
+   away from someone having unlimited access to all of your everything.
+
+   reply[702]
+
+   [s.gif]
+
+   mh-[704] 1 day ago[705] | root[706] | parent[707] | next[708] [–][709]
+   Not the person you're replying to, but: I just use a separate,
+   dedicated Chrome profile that isn't logged into anything except what
+   I'm working on. Then I keep the persistence, but without commingling in
+   a way that dramatically increases the risk.
+
+   edit: upon rereading, I now realize the (different) prompt injection
+   risk you were calling out re: the handoff to yt-dlp. Separate profiles
+   won't save you from that, though there are other approaches.
+
+   reply[710]
+
+   [s.gif]
+
+   sofixa[712] 23 hours ago[713] | root[714] | parent[715] | next[716]
+   [–][717]
+   Even without the bash escape risk (which can be mitigated with the
+   various ways of only allowing yt-dlp to be executed), YT Music is a
+   paid service gated behind a Google account, with associated payment
+   method. Even just stealing the auth cookie is pretty serious in terms
+   of damage it could do.
+
+   reply[718]
+
+   [s.gif]
+
+   mh-[720] 23 hours ago[721] | root[722] | parent[723] | next[724]
+   [–][725]
+   Agreed. I wouldn't cut loose an agent that's at risk of prompt
+   injection w/ unscoped access to my primary Google account.
+
+   But if I understood the original commenter's use case, they're just
+   searching YT Music to get the URL to a given song. This appears[0] to
+   work fine without being logged in. So you could parameterize or wrap
+   the call to yt-dlp and only have your cookie jar usable there.
+
+   [0]: https://music.youtube.com/search?q=sandstorm[726]
+
+   [1]: https://music.youtube.com/watch?v=XjvkxXblpz8[727]
+
+   reply[728]
+
+   [s.gif]
+
+   sofixa[730] 23 hours ago[731] | root[732] | parent[733] | next[734]
+   [–][735]
+   Oh, that's true, even allows you to play without an account. I can
+   swear that at some point it flat out refused any use unless you're
+   logged in with an account that has YT Music (I remember having to go to
+   regular YouTube to get the same song to send it to someone who didn't
+   have it).
+
+   reply[736]
+
+   [s.gif]
+
+   bartek_gdn[738] 21 hours ago[739] | root[740] | parent[741] | prev[742]
+   | next[743] [–][744]
+   That's also my approach, built quickly a cli for this with lightweight
+   session management
+
+   https://news.ycombinator.com/item?id=47207790[745]
+
+   reply[746]
+
+   [s.gif]
+
+   aadishv[748] 1 day ago[749] | root[750] | parent[751] | prev[752] |
+   next[753] [–][754]
+   Of course I still watch it and have my finger on the escape key at all
+   times :)
+
+   reply[755]
+
+   [s.gif]
+
+   glenpierce[757] 23 hours ago[758] | root[759] | parent[760] | next[761]
+   [–][762]
+   I am in awe of the confidence you have in your reflexes.
+
+   reply[763]
+
+   [s.gif]
+
+   aadishv[765] 22 hours ago[766] | root[767] | parent[768] | next[769]
+   [–][770]
+   You get used to it :) And especially once you get used to the YOLO
+   lifestyle, you end up realizing that practically any form of security
+   is entirely worthless when you're dealing with a 200 IQ brainwashed
+   robot hacker.
+
+   I think using the Pi coding agent really got me used to this way of
+   thinking:
+   https://mariozechner.at/posts/2025-11-30-pi-coding-agent/#to...[771]
+
+   reply[772]
+
+   [s.gif]
+
+   bergheim[774] 1 day ago[775] | root[776] | parent[777] | prev[778] |
+   next[779] [–][780]
+   For now you are. All these things fall with time, of course. You will
+   stop caring once you start feeling safe, we all do.
+
+   Also. AAarrgh, my new thing to be annoyed at is AI drivel written slop.
+
+   "No browser automation framework, no separate browser instance, no
+   re-login."
+
+   Oh really, nice. No separate computer either? No separate power
+   station, no house, no star wars? No something else we didn't ask for?
+   Just one a toggle and you go? Whoaaaaaa.
+
+   Edit: lol even the skill itself is vibe coded:
+
+   Lightweight Chrome DevTools Protocol CLI. Connects directly via
+   WebSocket — no Puppeteer, works with 100+ tabs, instant connection.
+
+   I feel like there's nothing fucking left on the internet anymore that
+   is not some mean of whatever the LLM is trained to talk like now.
+
+   reply[781]
+
+   [s.gif]
+
+   tacitusarc[783] 23 hours ago[784] | root[785] | parent[786] | next[787]
+   [–][788]
+   What can you do? I mentioned the use of AI on another thread, asking
+   essentially the same question. The comment was flagged, presumably as
+   off topic. Fair enough, I guess. But about 80% (maybe more) of posted
+   blogs etc that I see on HN now have very obvious signs of AI. Comments
+   do too. I hate it. If I want to see what Claude thinks I can ask it.
+
+   HN is becoming close to unusable, and this isn’t like the previous
+   times where people say it’s like reddit or something. It is inundated
+   with bot spam, it just happens the bot spam is sufficiently engaging
+   and well-written that it is really hard to address.
+
+   reply[789]
+
+[s.gif]
+
+             brabel[791] 12 hours ago[792] | root[793] | parent[794] | next[795]
+             [–][796]
+             Could you just be paranoid about it and seeing things where they
+             aren’t? I can’t imagine someone using AI to comment on HN!
+
+             reply[797]
+
+   [s.gif]
+
+   bergheim[799] 23 hours ago[800] | root[801] | parent[802] | prev[803] |
+   next[804] [–][805]
+   I hear you and I agree. I don't know. Gated communities?
+
+   reply[806]
+
+   [s.gif]
+
+   sheepscreek[808] 1 day ago[809] | root[810] | parent[811] | prev[812] |
+   next[813] [–][814]
+   As long as it’s gated and not turned on by default, it’s all good. They
+   could also add a warning/sanity check similar to “allow pasting” in the
+   console.
+
+   reply[815]
+
+   [s.gif]
+
+   hrmtst93837[817] 23 hours ago[818] | root[819] | parent[820] |
+   next[821] [–][822]
+   Relying on warnings or opt-ins for something with this blast radius is
+   security theater more than protection. The cleverest malware barely
+   waits for you to click OK before making itself at home, so that
+   checkbox is a speed bump on a highway.
+
+   Chrome's 'allow pasting' gets ignored reflexively by most users anyway.
+   If this agent can touch DevTools the attack surface expands far faster
+   than most people realize or will ever audit.
+
+   reply[823]
+
+   [s.gif]
+
+   esperent[825] 18 hours ago[826] | parent[827] | prev[828] | next[829]
+   [–][830]
+   > Most browser automation tools launch a fresh, isolated browser. This
+   one connects to the Chrome you're already running
+
+   Is this the same as what Claude in Chrome does?
+
+   I tried that for a while and since I use Firefox and Chromium, the
+   security problem of it seeing your tabs wasn't a big deal. Fresh Chrome
+   install, only ever used for this exact purpose. Plus you can watch it
+   working in real (actually very slow) time so if you did point it at
+   something risky you can take over at any point.
+
+   For actual testing of web apps though, a skill with playwright cli in
+   headless mode is much more effective. About 1-2k context per
+   interaction after a bit of tuning.
+
+   reply[831]
+
+   [s.gif]
+
+   paulirish[833] 23 hours ago[834] | parent[835] | prev[836] | next[837]
+   [–][838]
+   To be clear, this isn't a skill for the devtools mcp, but an
+   independent project. It doesn't look bad, but obviously browser
+   automation + agents is a very busy space with lots of parallel efforts.
+
+   DevTools MCP and its new CLI are maintained by the team behind Chrome
+   DevTools & Puppeteer and it certainly has a more comprehensive feature
+   set. I'd expect it to be more reliable, but.. hey open source
+   competition breeds innovation and I love that. :)
+
+   (I used to work on the DevTools team. And I still do, too)
+
+   reply[839]
+
+   [s.gif]
+
+   xmorse[841] 22 hours ago[842] | parent[843] | prev[844] | next[845]
+   [–][846]
+   Does anyone really use these hacked up with duct tape skills? why not
+   use something more reliable like playwriter.dev?
+
+   reply[847]
+
+   [s.gif]
+
+   Mashimo[849] 12 hours ago[850] | parent[851] | prev[852] | next[853]
+   [–][854]
+   Mhh, yt-dlp already has a build in youtube search, could you not use
+   that instead of anything with AI?
+
+   reply[855]
+
+   [s.gif]
+
+   mmaunder[857] 23 hours ago[858] | prev[859] | next[860] [–][861]
+   Google is so far behind agentic cli coding. Gemini CLI is awful. So bad
+   in fact that it’s clear none of their team use it. Also MCP is very
+   obviously dead, as any of us doing heavy agentic coding know. Why
+   permanently sacrifice that chunk of your context window when you can
+   just use CLI tools which are also faster and more flexible and many are
+   already trained in. Playwright with headless Chromium or headed chrome
+   is what anyone serious is using and we get all the dev and inspection
+   tools already. And it works perfectly. This only has appeal to those
+   starting out and confused into thinking this is the way. The answer is
+   almost never MCP.
+
+   reply[862]
+
+   [s.gif]
+
+   zeroxfe[864] 21 hours ago[865] | parent[866] | next[867] [–][868]
+   > Also MCP is very obviously dead, as any of us doing heavy agentic
+   coding know.
+
+   As someone that does heavy agentic coding (using basically all the
+   tools), this is so far from the truth. People claiming this have
+   probably never worked in large enterprise environments where things
+   like authentication, RBAC, rate limiting, abuse detection, centralized
+   management/updates/ops, etc. are a huge part of the development and
+   deployment workflow.
+
+   In these situations you can't just use skills and cli tools without a
+   gigantic amount of retooling and increased operational and security
+   complexity. MCP is really useful here, and allows centralized eng and
+   ops teams to manage their services in a way that aligns with the
+   organizations overall posture, policies, and infrastructure.
+
+   > Google is so far behind agentic cli coding. Gemini CLI is awful.
+
+   This part I totally agree. It's really hard to express how bad it is
+   (and it's really disappointing.)
+
+   reply[869]
+
+   [s.gif]
+
+   bloppe[871] 19 hours ago[872] | root[873] | parent[874] | next[875]
+   [–][876]
+   > you can't just use skills and cli tools without a gigantic amount of
+   retooling and increased operational and security complexity
+
+   You're describing MCP. After all, MCP is just reinventing the OpenAPI
+   wheel. You can just have a self-documenting REST API using OpenAPI. Put
+   the spec in your context and your model knows how to use it. You can
+   have all the RBAC and rate limiting and auth you want. Heck, you could
+   even build all that complexity into a CLI tool if you want. MCP the
+   protocol doesn't actually enable anything. And implementing an MCP
+   server is exactly as complex as using any other established protocol if
+   you're using all those features anyway
+
+   reply[877]
+
+   [s.gif]
+
+   whattheheckheck[879] 17 hours ago[880] | root[881] | parent[882] |
+   next[883] [–][884]
+   The clients for mcp can drop a url and http in the mcp.json and get
+   access to the application. Can the client do that for every rest api?
+
+   reply[885]
+
+   [s.gif]
+
+   bloppe[887] 17 hours ago[888] | root[889] | parent[890] | next[891]
+   [–][892]
+   Ya, if you just use OpenAPI. That's why I'm saying MCP adds nothing.
+   It's just another standard for documenting APIs. There are many that
+   have been around for a long time and that are better integrated with
+   existing ecosystems. There's also gRPC reflection. I'm sure there are
+   others. LLMs can use them all equally effectively.
+
+   reply[893]
+
+   [s.gif]
+
+   moritonal[895] 20 hours ago[896] | root[897] | parent[898] | prev[899]
+   | next[900] [–][901]
+   Given MCP is supposed to just be a standardised format for
+   self-describing APIs, why are all the features you listed MCP related
+   things? It sounds more like it's forced the enterprise to build such
+   features which cli tooling didn't have?
+
+   reply[902]
+
+   [s.gif]
+
+   rsalus[904] 20 hours ago[905] | root[906] | parent[907] | next[908]
+   [–][909]
+   mostly by virtue of being a common standard. MCP servers are primarily
+   useful in a remote environment, where centralized management of
+   cross-cutting concerns matters. also its really useful for integrating
+   existing distributed services, e.g., internal data lakes.
+
+   I think it's clear a self-describing CLI is optimal for local-first
+   tooling and portability. I personally view remote MCP servers as
+   complementary in the space.
+
+   reply[910]
+
+[s.gif]
+
+             tomnipotent[912] 19 hours ago[913] | root[914] | parent[915] |
+             prev[916] | next[917] [–][918]
+             MCP's can hide most things behind an API.
+
+             reply[919]
+
+   [s.gif]
+
+   IX-103[921] 20 hours ago[922] | parent[923] | prev[924] | next[925]
+   [–][926]
+   FYI: Gemini Cli is used internally at Google. It's actually more
+   popular than Antigravity. Google uses MCP services internally for code
+   search (since everything is in a mono-repo you don't want to waste time
+   grepping billions of files), accessing docs and bugs, and also
+   accessing project specific RAG databases for expertise grounding.
+
+   Source - I know people at Google.
+
+   reply[927]
+
+   [s.gif]
+
+   mmaunder[929] 4 hours ago[930] | root[931] | parent[932] | next[933]
+   [–][934]
+   Have you tried it? It's like working with an idiot savant. It's
+   absolutely brilliant, but goes off the rails constantly, spewing out
+   CoT when it shouldn't be, getting into weird loops, spewing gibberish
+   or repeated phrases. But when it does actually work, it's brilliant.
+   But the issues make it unusable for dev at any level - and completely
+   untrustworthy. Contrasted with CC or Codex CLI it's night and day. The
+   latter two are incredibly reliable, rock solid, and crazy productive,
+   and becoming exponentially more so by the week.
+
+   reply[935]
+
+   [s.gif]
+
+   cheema33[937] 22 hours ago[938] | parent[939] | prev[940] | next[941]
+   [–][942]
+   > Also MCP is very obviously dead
+
+   Some people will push back on this. They are holding out hope that the
+   recent improvements Anthropic has made in this regard have improved the
+   context rot problem with MCP. Anthropic's changes improve things a
+   little. But it is akin to putting lipstick on a pig. It helps, but not
+   much.
+
+   The reason MCP is dying/dead is because MCP servers, once configured,
+   bloat up context even when they are not being used. Why would anybody
+   want that?
+
+   Use agent skills. And say goodbye to MCP. We need to move on from MCP.
+
+   reply[943]
+
+   [s.gif]
+
+   maxwellg[945] 19 hours ago[946] | root[947] | parent[948] | next[949]
+   [–][950]
+   Is your agent harness dropping the entire MCP server tool description
+   output directly into the context window? Is your agent harness always
+   addig MCP servers to the context even when they are not being used?
+
+   MCP is a wire format protocol between clients and servers. What ends up
+   inside the context window is the agent builder's decision.
+
+   reply[951]
+
+   [s.gif]
+
+   staticassertion[953] 4 hours ago[954] | root[955] | parent[956] |
+   prev[957] | next[958] [–][959]
+   I'm a layman here. How is a skill any better? Aren't agent tools loaded
+   on-demand, just as a skill would be? People are mentioning OpenAPI, but
+   wouldn't you need to load the spec for that too?
+
+   reply[960]
+
+   [s.gif]
+
+   ktoo_[962] 20 hours ago[963] | root[964] | parent[965] | prev[966] |
+   next[967] [–][968]
+   > it is akin to putting lipstick on a pig. It helps, but not much.
+
+   The lipstick helps? This had me in stitches. Sorry for the non-additive
+   reply. This is the funniest way I have seen this or any other phrase
+   explained. By far. Honestly has made my day and set me up for the whole
+   week.
+
+   reply[969]
+
+   [s.gif]
+
+   dominotw[971] 22 hours ago[972] | root[973] | parent[974] | prev[975] |
+   next[976] [–][977]
+   i am using notion mcp. is there a corresponding skill. also wtf is a
+   plugin.
+
+   reply[978]
+
+   [s.gif]
+
+   Rapzid[980] 20 hours ago[981] | root[982] | parent[983] | prev[984] |
+   next[985] [–][986]
+   The bloat problem is already out dated though. People are having the
+   LLM pick the MCP servers it needs for a particular task up front, or
+   picking them out-of-band, so the full list doesn't exist in the context
+   every call.
+
+   reply[987]
+
+   [s.gif]
+
+   edwinjm[989] 20 hours ago[990] | parent[991] | prev[992] | next[993]
+   [–][994]
+   MCP is dead? Which cli tool should we use to instruct Chrome to open a
+   page and click the Open button? And to read what appears in the console
+   after clicking?
+
+   MCP permanently sacrifice a chunk of the context window? And a skill
+   for you cli is free?
+
+   reply[995]
+
+   [s.gif]
+
+   rsalus[997] 22 hours ago[998] | parent[999] | prev[1000] | next[1001]
+   [–][1002]
+   MCP is very much not dead. centralized remote MCP servers are
+   incredibly useful. also bespoke CLIs still require guidance for models
+   to use effectively, so it's clear that token efficiency is still an
+   issue regardless.
+
+   reply[1003]
+
+   [s.gif]
+
+   Torn[1005] 22 hours ago[1006] | root[1007] | parent[1008] | next[1009]
+   [–][1010]
+   Tbh I find self-documenting CLIs (e.g. with a `--help` flag, and
+   printing correct usage examples when LLMs make things up) plus a skill
+   that's auto invoked to be pretty reliable. CLIs can do OAuth dances too
+   just fine.
+
+   MCP's remaining moats I think are:
+
+   - No-install product integrations (just paste in mcp config into app)
+
+   - Non-developer end users / no shell needed (no terminal)
+
+   - Multi-tenant auth (many users, dynamic OAuth)
+
+   - Security sandboxing (restrict what agents can do), credential
+   sandboxing (agents never see secrets)
+
+   - Compliance/audit (structured logs, schema enforcement)?
+
+   If you're a developer building for developers though, CLI seems to be a
+   clear winner right
+
+   reply[1011]
+
+   [s.gif]
+
+   quotemstr[1013] 21 hours ago[1014] | root[1015] | parent[1016] |
+   next[1017] [–][1018]
+   Imagine if, in addition to local MCP "servers", the MCP people had
+   nurtured a structured CLI-based --help-equivalent consumable by LLMs
+   and shell completion engines alike. Doing so, you unify "CLI" (trivial
+   deployment; human accessibility) and MCP-style (structured and
+   discoverable tool calling) in a single DWIM artifact.
+
+   But since when has this industry done the right thing informed by
+   wisdom and hindsight?
+
+   reply[1019]
+
+[s.gif]
+
+              debugnik[1021] 10 hours ago[1022] | root[1023] | parent[1024] |
+              next[1025] [–][1026]
+              That structured CLI already exists: PowerShell cmdlets.
+
+              reply[1027]
+
+   [s.gif]
+
+   quotemstr[1029] 3 hours ago[1030] | root[1031] | parent[1032] |
+   next[1033] [–][1034]
+   Not in any meaningful, general way on Unix systems it doesn't. Nobody
+   uses psh outside Windows
+
+   reply[1035]
+
+   [s.gif]
+
+   AshleyGrant[1037] 11 minutes ago[1038] | root[1039] | parent[1040] |
+   next[1041] [–][1042]
+   Maybe they should consider using it.
+
+   reply[1043]
+
+   [s.gif]
+
+   debugnik[1045] 2 hours ago[1046] | root[1047] | parent[1048] |
+   prev[1049] | next[1050] [–][1051]
+   But nobody is using your hypothetical "structured CLI-based
+   --help-equivalent consumable by LLMs and shell completion engines
+   alike" either. In terms of mindshare, you're starting from scratch
+   either way.
+
+   I just remembered docopt, which maybe fits the bill in a more Unixy
+   way, but it and its ports are mostly abandoned, for various reasons.
+
+   reply[1052]
+
+   [s.gif]
+
+   rsalus[1054] 21 hours ago[1055] | root[1056] | parent[1057] |
+   prev[1058] | next[1059] [–][1060]
+   that's a pretty interesting idea. It would be nice if there was such a
+   standard. the approach I'm taking right now: a CLI that accepts
+   structured JSON as input, with an 'mcp' subcommand that starts a stdio
+   server. I bundle a 'help' command with a 'describe' action for
+   self-service guidance scoped to a particular feature/tool.
+
+   reply[1061]
+
+   [s.gif]
+
+   yammosk[1063] 17 hours ago[1064] | root[1065] | parent[1066] |
+   next[1067] [–][1068]
+   There are actually a lot of great things you can to to make CLIs more
+   helpful to agents. I use a structured help called '--capabilities' but
+   there is a ton of JIT context you can do from the CLI as well
+   https://keyboardsdown.com/posts/01-agent-first-clis/[1069]
+
+   reply[1070]
+
+   [s.gif]
+
+   abhis3798[1072] 22 hours ago[1073] | root[1074] | parent[1075] |
+   prev[1076] | next[1077] [–][1078]
+   I see remote MCP servers as a great interface to consume api responses.
+   The idea that you essentially make your apis easily available to agents
+   to bring in relevant context is a powerful one.
+
+   When folks say MCP is dead, I don't get it. What other alternatives
+   exist in place of MCP? Arbitrary code via curl/sdks to call a remote
+   endpoint?
+
+   reply[1079]
+
+   [s.gif]
+
+   attentive[1081] 21 hours ago[1082] | root[1083] | parent[1084] |
+   next[1085] [–][1086]
+   > What other alternatives exist in place of MCP? Arbitrary code via
+   curl/sdks to call a remote endpoint?
+
+   cli?
+
+   for example aws cli. It's a full interface to aws API. Why would you
+   need mcp for that?
+
+   and if you have any doubts, agents use it with a great effect even
+   without any relevant skill. "aws help" is fully discoverable.
+
+   reply[1087]
+
+   [s.gif]
+
+   rsalus[1089] 21 hours ago[1090] | root[1091] | parent[1092] |
+   next[1093] [–][1094]
+   yes, but clis thus need self-service commands to provide guidance, and
+   their responses need to be optimized for consumption by agents. in a
+   sense, this is the same sort of context tax that MCP servers incur. so
+   in my view cli and MCP are complementary tools; one is not strictly
+   superior over the other.
+
+   reply[1095]
+
+   [s.gif]
+
+   cheema33[1097] 7 hours ago[1098] | root[1099] | parent[1100] |
+   next[1101] [–][1102]
+   > yes, but clis thus need self-service commands to provide guidance,
+   and their responses need to be optimized for consumption by agents.
+
+   MCP vs Agent Skills:
+
+   MCPs once configured cost you tokens even when they are not used.
+   Unlike MCPs, skills use progressive disclosure. The AI agent does not
+   load up the entire context, if the skill is not being used.
+
+   MCPs will die off mostly for this reason alone.
+
+   reply[1103]
+
+   [s.gif]
+
+   mattnewton[1105] 21 hours ago[1106] | root[1107] | parent[1108] |
+   prev[1109] | next[1110] [–][1111]
+   I think cli’s are more token efficient- the help menu is loaded only
+   when needed, and the output is trivially pipe able to grep or jq to
+   filter out what the model actually wants
+
+   reply[1112]
+
+[s.gif]
+
+              nojito[1114] 22 hours ago[1115] | root[1116] | parent[1117] |
+              prev[1118] | next[1119] [–][1120]
+              all you need is a simple skills.md and maybe a couple examples and
+              codex picks up my custom toolkit and uses it.
+
+              reply[1121]
+
+[s.gif]
+
+              dominotw[1123] 21 hours ago[1124] | root[1125] | parent[1126] |
+              next[1127] [–][1128]
+              whats your custom toolkit
+
+              reply[1129]
+
+[s.gif]
+
+              nojito[1131] 17 hours ago[1132] | root[1133] | parent[1134] |
+              next[1135] [–][1136]
+              I have dozens of clis that are custom built for codex to use.
+
+              reply[1137]
+
+   [s.gif]
+
+   sega_sai[1139] 22 hours ago[1140] | parent[1141] | prev[1142] |
+   next[1143] [–][1144]
+   I don't know if this just anecdotal random impression, but in a last
+   week or two I had mostly good experience with Google cli. While
+   previously I constantly complained about it. I have been using it
+   together with codex, and I would not say that one is much better than
+   another.
+
+   It is hard to say nowadays, when things change so quickly
+
+   reply[1145]
+
+   [s.gif]
+
+   sunaookami[1147] 7 hours ago[1148] | parent[1149] | prev[1150] |
+   next[1151] [–][1152]
+   Gemini 3.1 Pro through Gemini CLI always tries to write files with cat
+   instead of using the write_file tool, it's awful at tool use.
+
+   reply[1153]
+
+   [s.gif]
+
+   girvo[1155] 22 hours ago[1156] | parent[1157] | prev[1158] | next[1159]
+   [–][1160]
+   I know it’s a bit of a tangent but man you’re right re. Gemini CLI.
+   It’s woefully bad, barely works. Maybe because I was a “free” user
+   trying it out at the time, but it was such a bad experience it turned
+   me off subscribing to whatever their coding plan is called today.
+
+   reply[1161]
+
+   [s.gif]
+
+   ElCapitanMarkla[1163] 21 hours ago[1164] | root[1165] | parent[1166] |
+   next[1167] [–][1168]
+   I had this exp too, but I trialed the pro sub a few weeks back and it
+   has been great. I have no complaints this time
+
+   reply[1169]
+
+   [s.gif]
+
+   luckydata[1171] 22 hours ago[1172] | root[1173] | parent[1174] |
+   prev[1175] | next[1176] [–][1177]
+   it's not the CLI, it's the model. The model wasn't trained to do that
+   kind of work, was trained to do one shot coding, not sustained back and
+   forth until it gets it right like Claude and ChatGPT.
+
+   reply[1178]
+
+   [s.gif]
+
+   hu3[1180] 20 hours ago[1181] | parent[1182] | prev[1183] | next[1184]
+   [–][1185]
+   > Also MCP is very obviously dead...
+
+   Couldn't have been more wrong. MCP despite its manageable downsides is
+   leagues ahead of anything else in many ways.
+
+   The fact that SoTA models are trained to handle MCP should be hint
+   enough to the observant.
+
+   I probably build one MCP tool per week at work.
+
+   And every project I work on gets its own MCP tool too. It's invaluable
+   to have specialized per-project tooling instead of a bunch of
+   heterogeneous scripts+glue+prayer.
+
+   Anything specialized goes into an MCP.
+
+   reply[1186]
+
+   [s.gif]
+
+   synalx[1188] 15 hours ago[1189] | parent[1190] | prev[1191] |
+   next[1192] [–][1193]
+   Antigravity's coding agent is worlds apart from Gemini CLI, though.
+
+   reply[1194]
+
+   [s.gif]
+
+   danpalmer[1196] 21 hours ago[1197] | parent[1198] | prev[1199] |
+   next[1200] [–][1201]
+   > So bad in fact that it’s clear none of their team use it.
+
+   I use it extensively, many of my colleagues do. I get a ton of value
+   out of it. Some prefer Antigravity, but I prefer Gemini CLI. I get
+   fairly long trajectories out of it, and some of my colleagues are
+   getting day-long trajectories out of it. It has improved massively
+   since I started using it when it first came out.
+
+   reply[1202]
+
+   [s.gif]
+
+   hugs[1204] 15 hours ago[1205] | parent[1206] | prev[1207] | next[1208]
+   [–][1209]
+   some serious people use vibium instead. (full-disclosure: "some serious
+   people" is me.)
+
+   reply[1210]
+
+   [s.gif]
+
+   spiderfarmer[1212] 22 hours ago[1213] | parent[1214] | prev[1215] |
+   next[1216] [–][1217]
+   MCP is not just used for coding.
+
+   reply[1218]
+
+   [s.gif]
+
+   quotemstr[1220] 21 hours ago[1221] | parent[1222] | prev[1223] |
+   next[1224] [–][1225]
+   > Why permanently sacrifice that chunk of your context window when you
+   can just use CLI tools which are also faster and more flexible and many
+   are already trained in
+
+   What about all the CLI tools not baked into the model's priors?
+
+   Every time someone says "extensibility mechanism X is dead!", I think
+   "Well, I guess that guy isn't doing anything that needs to extend the
+   statistical average of 2010s-era Reddit"
+
+   reply[1226]
+
+   [s.gif]
+
+   boomskats[1228] 23 hours ago[1229] | prev[1230] | next[1231] [–][1232]
+   Been using this one for a while, mostly with codex on opencode. It's
+   more reliable and token efficient than other devtools protocol MCPs
+   i've tried.
+
+   Favourite unexpected use case for me was telling gemini to use it as a
+   SVG editing repl, where it was able to produce some fantastic looking
+   custom icons for me after 3-4 generate/refresh/screenshot iterations.
+
+   Also works very nicely with electron apps, both reverse engineering and
+   extending.
+
+   reply[1233]
+
+   [s.gif]
+
+   zxspectrumk48[1235] 1 day ago[1236] | prev[1237] | next[1238] [–][1239]
+   I found this one working amazingly well (same idea - connect to
+   existing session): https://github.com/remorses/playwriter[1240]
+
+   reply[1241]
+
+   [s.gif]
+
+   cheema33[1243] 22 hours ago[1244] | prev[1245] | next[1246] [–][1247]
+   How does this compare with playwright CLI?
+
+   https://github.com/microsoft/playwright-cli[1248]
+
+   reply[1249]
+
+   [s.gif]
+
+   Torn[1251] 22 hours ago[1252] | parent[1253] | next[1254] [–][1255]
+   I personally found playwright-cli, and agent-browser which wraps
+   playwright, both more token-efficient than using the raw mcp.
+
+   Odd that this article from Dec 2025 has been posted to the top of HN
+   though
+
+   reply[1256]
+
+[s.gif]
+
+              akvadrako[1258] 12 hours ago[1259] | parent[1260] | prev[1261] |
+              next[1262] [–][1263]
+              Its easier to connect to existing sessions in your main browser.
+
+              reply[1264]
+
+   [s.gif]
+
+   EGreg[1266] 22 hours ago[1267] | parent[1268] | prev[1269] | next[1270]
+   [–][1271]
+   It’s made by Google and comes with Chrome
+
+   reply[1272]
+
+   [s.gif]
+
+   LauraMedia[1274] 11 hours ago[1275] | prev[1276] | next[1277] [–][1278]
+   Is this really the state of AI in 2026?
+
+   It takes over your entire browser to center a div... and then fails to
+   do so?
+
+   reply[1279]
+
+   [s.gif]
+
+   recroad[1281] 20 hours ago[1282] | prev[1283] | next[1284] [–][1285]
+   I've been using TideWave[1] for the last few months and it has this
+   built-in. It started off as an Elixir/LiveView thing but now they
+   support popular JavaScript frameworks and RoR as well. For those who
+   like this, check it out. It even takes it further and has access to the
+   runtime of your app (not just the browser).
+
+   The agent basically is living inside your running app with access to
+   databases, endpoints etc. It's awesome.
+
+   1. https://tidewave.ai/[1286]
+
+   reply[1287]
+
+   [s.gif]
+
+   galaxyLogic[1289] 19 hours ago[1290] | parent[1291] | next[1292]
+   [–][1293]
+   Interesting. Does it only work with known frameworks like Next, React
+   etc. or could I use it with my plain Node.js app which produces
+   browser-output?
+
+   reply[1294]
+
+[s.gif]
+
+              recroad[1296] 19 hours ago[1297] | root[1298] | parent[1299] |
+              next[1300] [–][1301]
+              No, doesn't use work with server-side only apps.
+
+              reply[1302]
+
+   [s.gif]
+
+   galaxyLogic[1304] 12 hours ago[1305] | root[1306] | parent[1307] |
+   next[1308] [–][1309]
+   It's a server-side app whose GUI is in the browser, a bit like Electron
+   or what have you.
+
+   I guess my question is does Tidewawe only work with a fixed set of
+   known "frameworks" like React and Next, or is it a more general purpose
+   tool for analysing an app based on its source-code and the HTML it
+   produces for the browser?
+
+   reply[1310]
+
+[s.gif]
+
+              recroad[1312] 3 hours ago[1313] | root[1314] | parent[1315] |
+              next[1316] [–][1317]
+              Fixed set.
+
+              reply[1318]
+
+   [s.gif]
+
+   guard402[1320] 15 hours ago[1321] | prev[1322] | next[1323] [–][1324]
+   We tested this — the default take_snapshot path
+   (Accessibility.getFullAXTree) is safe. It filters display:none elements
+   because they're excluded from the accessibility tree.
+
+   But evaluate_script is the escape hatch. If an agent runs
+   document.body.textContent instead of using the AX tree, hidden
+   injections in display:none divs show up in the output. innerText is
+   safe (respects CSS visibility), textContent is not (returns all text
+   nodes regardless of styling).
+
+   The gap: the agent decides which extraction method to use, not the
+   user. When the AX tree doesn't return enough text, a plausible next
+   step is evaluate_script with textContent — which is even shown as an
+   example in the docs.
+
+   Also worth noting: opacity:0 and font-size:0 bypass even the safe
+   defaults. The AX tree includes those because the elements are
+   technically 'rendered' and accessible to screen readers. display:none
+   is just the most common hiding technique, not the only one.
+
+   reply[1325]
+
+   [s.gif]
+
+   re5i5tor[1327] 7 hours ago[1328] | prev[1329] | next[1330] [–][1331]
+   Lots of MCP hate, and some love, in the comments.
+
+   80% of MCPs are thin wrappers over APIs . Yes they stink.
+
+   A well written remote OAuth MCP need not stink. Tons of advantages
+   starting with strong security baked in.
+
+   I like Cloudflare Code Mode as an MCP pattern. Two tools, search and
+   execute.
+
+   1M Opus 4.6 also reduces the penalties of MCP’s context approach. Along
+   with tool search etc.
+
+   reply[1332]
+
+   [s.gif]
+
+   nubsero[1334] 16 hours ago[1335] | prev[1336] | next[1337] [–][1338]
+   I’ve been experimenting with a similar approach using Playwright, and
+   the biggest takeaway for me was how much “hidden API” most modern
+   websites actually have.
+
+   Once you start mapping interactions → network calls, a lot of UI
+   complexity just disappears. It almost feels like the browser becomes a
+   reverse-engineering tool for undocumented APIs.
+
+   That said, I do think there’s a tradeoff people don’t talk about
+   enough:
+
+   - Sites change frequently, so these inferred APIs can be brittle -
+   Auth/session handling gets messy fast - And of course, the ToS /
+   ethical side is a gray area
+
+   Still, for personal automation or internal tooling, it’s insanely
+   powerful. Way more efficient than driving full browser sessions for
+   everything.
+
+   Curious how others are handling stability — are you just regenerating
+   these mappings periodically, or building some abstraction layer on top?
+
+   reply[1339]
+
+   [s.gif]
+
+   tonyhschu[1341] 23 hours ago[1342] | prev[1343] | next[1344] [–][1345]
+   Very cool. I do something like this but with Playwright. It used to be
+   a real token hog though, and got expensive fast. So much so that I
+   built a wrapper to dump results to disk first then let the agent query
+   instead. https://uisnap.dev/[1346]
+
+   Will check this out to see if they’ve solved the token burn problem.
+
+   reply[1347]
+
+   [s.gif]
+
+   esperent[1349] 18 hours ago[1350] | parent[1351] | next[1352] [–][1353]
+   I use playwright CLI. Wrote a skill for it, and after a bit of tuning
+   it's about 1-2k context per interaction which is fine. The key was that
+   Claude only needs screenshots initially and then can query the dev
+   tools for logs as needed.
+
+   reply[1354]
+
+   [s.gif]
+
+   Torn[1356] 22 hours ago[1357] | parent[1358] | prev[1359] | next[1360]
+   [–][1361]
+   Mostly, yes: https://github.com/microsoft/playwright-cli[1362]
+
+   reply[1363]
+
+   [s.gif]
+
+   mambodog[1365] 22 hours ago[1366] | parent[1367] | prev[1368] |
+   next[1369] [–][1370]
+   my workaround for this was to make a wrapper mcp server which uses
+   claude haiku to summarize the page snapshot returned in the response of
+   each playwright mcp call, and that has worked pretty well for me:
+   https://github.com/jsdf/playwright-slim-mcp[1371]
+
+   reply[1372]
+
+   [s.gif]
+
+   Igor_Wiwi[1374] 8 hours ago[1375] | prev[1376] | next[1377] [–][1378]
+   I can't make it run under WSL with Claude Code, anyone succeeded in
+   this?
+
+   reply[1379]
+
+   [s.gif]
+
+   archon810[1381] 5 hours ago[1382] | parent[1383] | next[1384] [–][1385]
+   I haven't been able to get it to work under WSL in Cursor either.
+
+   reply[1386]
+
+   [s.gif]
+
+   danielraffel[1388] 16 hours ago[1389] | prev[1390] | next[1391]
+   [–][1392]
+   I asked Claude to use this with the new scheduled tasks /loop skill to
+   update my Oscar picks site every five minutes during tonight’s awards
+   show. It simply visited the Oscars' realtime feed via Chrome DevTools,
+   and updated my picks and pushed to gh pages. It even handled the tie
+   correctly.
+
+   https://danielraffel.me/2026/03/16/my-oscar-2026-picks/[1393]
+
+   I know I could just use claude --chrome, but I’m used to this excellent
+   MCP server.
+
+   reply[1394]
+
+   [s.gif]
+
+   egeozcan[1396] 16 hours ago[1397] | parent[1398] | next[1399] [–][1400]
+   Very cool idea and site! I wish claude and others could parse video
+   streams then you could even create your own feed.
+
+   reply[1401]
+
+   [s.gif]
+
+   dt3ft[1403] 12 hours ago[1404] | parent[1405] | prev[1406] | next[1407]
+   [–][1408]
+   Neat idea :)
+
+   reply[1409]
+
+   [s.gif]
+
+   jasonjmcghee[1411] 19 hours ago[1412] | prev[1413] | next[1414]
+   [–][1415]
+   I had fun playing with it + WebMCP this weekend, but I think, similarly
+   to how claude code / codex + MCP require SKILL.md, websites might too.
+
+   We could put them in a dedicated tag:
+
+    <script type="text/skill+markdown">
+    ---
+    name: ...
+    description ...
+    ---
+    ...
+    </script>
+
+   For all the skills with you want on the page, optionally set to default
+   which "should be read in full to properly use the page".
+
+   And then add some javascript functions to wrap it / simplify required
+   tokens.
+
+   Made a repo and a website if anyone is interested:
+   https://webagentskills.dev/[1416]
+
+   reply[1417]
+
+   [s.gif]
+
+   hugs[1419] 15 hours ago[1420] | prev[1421] | next[1422] [–][1423]
+   i wish more people knew or cared about web standards vs proprietary
+   protocols. the webdriver bidi protocol took the good parts of cdp and
+   made it a w3c standard, but no one knows about it. some of the people
+   who do know about it, find one thing they don't like and give up. let's
+   not keep giving megacorporations outsized influence and control over
+   the web and the tools we use with it. let's celebrate standards and
+   make them awesome.
+
+   reply[1424]
+
+   [s.gif]
+
+   silverwind[1426] 22 hours ago[1427] | prev[1428] | next[1429] [–][1430]
+   I found Firefox with
+   https://github.com/padenot/firefox-devtools-mcp[1431] to work better
+   then the default Chrome MCP, is seems much faster.
+
+   reply[1432]
+
+   [s.gif]
+
+   babas03[1434] 18 hours ago[1435] | prev[1436] | next[1437] [–][1438]
+   Great to see the standalone CLI shipping in alongside this! There’s
+   been a lot of talk today about MCP 'context bloat,' but providing a
+   direct bridge to active DevTools sessions is something a standard
+   headless CLI can’t replicate easily. The ability to select an element
+   in the Elements panel and immediately 'delegate' the fix to an agent is
+   exactly the kind of hybrid workflow that makes DevTools so powerful.
+
+   reply[1439]
+
+   [s.gif]
+
+   vinmay[1441] 17 hours ago[1442] | prev[1443] | next[1444] [–][1445]
+   For something like Chrome DevTools MCP with authenticated browser
+   sessions, the specific risk is credentials in the browser context + any
+   SEND capability reachable from the same entry points. If a page can
+   inject a prompt that triggers a tool call, and that call path can also
+   reach outbound network I/O, you have an exfiltration vector without
+   needing shell access at all.
+
+   reply[1446]
+
+   [s.gif]
+
+   NiekvdMaas[1448] 1 day ago[1449] | prev[1450] | next[1451] [–][1452]
+   Also works nicely together with agent-browser
+   (https://github.com/vercel-labs/agent-browser[1453]) using
+   --auto-connect
+
+   reply[1454]
+
+   [s.gif]
+
+   rossvc[1456] 23 hours ago[1457] | prev[1458] | next[1459] [–][1460]
+   I've been using the DevTools MCP for months now, but it's extremely
+   token heavy. Is there an alternative that provides the same amount of
+   detail when it comes to reading back network requests?
+
+   reply[1461]
+
+   [s.gif]
+
+   nerdsniper[1463] 23 hours ago[1464] | parent[1465] | next[1466]
+   [–][1467]
+   It's probably not fully optimized and could be compacted more with just
+   some effort, and further with clever techniques, but browser
+   state/session data will always use up a ton of tokens because it's a
+   ton of data. There's not really a way around that. AI's have a
+   surprising "intuition" about problems that often help them guess at
+   solutions based on insufficient information (and they guess correctly
+   more often than I expect they should). But when their intuition isn't
+   enough and you need to feed them the real logs/data...it's always gonna
+   use a bunch of tokens.
+
+   This is one place where human intuition helps a ton today. If you can
+   find the most relevant snippets and give the AI just the right context,
+   it does a much better job.
+
+   reply[1468]
+
+   [s.gif]
+
+   Torn[1470] 22 hours ago[1471] | parent[1472] | prev[1473] | next[1474]
+   [–][1475]
+   https://github.com/microsoft/playwright-cli[1476] and
+   https://agent-browser.dev/[1477]
+
+   reply[1478]
+
+   [s.gif]
+
+   DimitriBouriez[1480] 22 hours ago[1481] | parent[1482] | prev[1483] |
+   next[1484] [–][1485]
+   i'm experimenting with a different approach (no CDP/ARIA trees, just
+   Chrome extension messaging that returns a numbered list of interactive
+   elements). Way lighter on tokens and undetectable but still very
+   experimental : https://github.com/DimitriBouriez/navagent-mcp[1486]
+
+   reply[1487]
+
+[s.gif]
+
+              mmaunder[1489] 23 hours ago[1490] | parent[1491] | prev[1492] |
+              next[1493] [–][1494]
+              Yes. CLI. Always CLI. Never MCP. Ever. You’re welcome.
+
+              reply[1495]
+
+   [s.gif]
+
+   flash_us0101[1497] 15 hours ago[1498] | root[1499] | parent[1500] |
+   next[1501] [–][1502]
+   CLI is great when you know what command to run. MCP is great when the
+   agent decides what to run - it discovers tools without you scripting
+   the interaction.
+
+   The real problem isn't MCP vs CLI, it's that MCP originally loaded
+   every tool definition into context upfront. A typical multi-server
+   setup (GitHub, Slack, Sentry, Grafana, Splunk) consumes ~55K tokens in
+   definitions before Claude does any work. Tool selection accuracy also
+   degrades past 30-50 tools.
+
+   Anthropic's Tool Search fixes this with per-tool lazy loading - tools
+   are defined with defer_loading: true, Claude only sees a search index,
+   and full schemas load on demand for the 3-5 tools actually needed. 85%
+   token reduction. The original "everything upfront" design was wrong,
+   but the protocol is catching up.
+
+   reply[1503]
+
+   [s.gif]
+
+   nerdsniper[1505] 22 hours ago[1506] | root[1507] | parent[1508] |
+   prev[1509] | next[1510] [–][1511]
+   That doesn't solve the issue here because the amount of data in the
+   browser state dwarfs the MCP overhead.
+
+   reply[1512]
+
+   [s.gif]
+
+   bartek_gdn[1514] 21 hours ago[1515] | root[1516] | parent[1517] |
+   next[1518] [–][1519]
+   Can't we just iteratively inspect the network traces then? We don't
+   need to consume the whole 2mb of data, maybe just dump the network
+   trace and use jq to get the fields to keep the context minimal. I
+   haven't added this in
+   https://news.ycombinator.com/item?id=47207790[1520] , but I feel it
+   would be a good addition. Then prompt it with instructions to gradually
+   discover the necessary data.
+
+   But then I wonder, where the balance is between a bunch of small tool
+   calls, vs one larger one.
+
+   I recall some recent discussion here on hn on big data analysis
+
+   reply[1521]
+
+   [s.gif]
+
+   cheema33[1523] 22 hours ago[1524] | root[1525] | parent[1526] |
+   prev[1527] | next[1528] [–][1529]
+   > That doesn't solve the issue here because the amount of data in the
+   browser state dwarfs the MCP overhead.
+
+   The problem with MCP is that you are paying the price in token usage,
+   even if you are not using the MCP server. Why would anybody want that?
+
+   And no, the tool search function recently introduced by Anthropic does
+   not completely solve this problem.
+
+   reply[1530]
+
+   [s.gif]
+
+   RALaBarge[1532] 20 hours ago[1533] | prev[1534] | next[1535] [–][1536]
+   I made a websocket proxy + chrome extension to give control of the DOM
+   to agents for my middleware app:
+   https://github.com/RALaBarge/browserbox[1537]
+
+   The thing I am working on is improving at the moment agentic tool usage
+   success rates for my research and I use this as a proxy to access
+   everything with the cookies I allow in the session.
+
+   reply[1538]
+
+   [s.gif]
+
+   raw_anon_1111[1540] 23 hours ago[1541] | prev[1542] | next[1543]
+   [–][1544]
+   I don’t do any serious web development and haven’t for 25 years aside
+   from recently vibe coding internal web admin portals for back end cloud
+   + app dev projects. But I did recently have to implement a web crawler
+   for a customer’s site for a RAG project using Chromium + Playwrite in a
+   Docker container deployed to Lambda.
+
+   I ran the Docker container locally for testing. Could a web developer
+   test using Claude + Chromium in a Docker container without using their
+   real Chrome instance?
+
+   reply[1545]
+
+   [s.gif]
+
+   vesselapi[1547] 20 hours ago[1548] | parent[1549] | next[1550]
+   [–][1551]
+   Yes, running Chromium in a Docker container works well for this. There
+   are prebuilt images like
+   https://hub.docker.com/r/browserless/chrome[1552] that give you a
+   headless instance you can connect to via CDP (Playwright, Puppeteer).
+   Keeps everything isolated from your actual browser profile and
+   credentials.
+
+   reply[1553]
+
+[s.gif]
+
+              bartek_gdn[1555] 21 hours ago[1556] | parent[1557] | prev[1558] |
+              next[1559] [–][1560]
+              Take a look at https://news.ycombinator.com/item?id=47207790[1561]
+
+              reply[1562]
+
+   [s.gif]
+
+   senand[1564] 23 hours ago[1565] | prev[1566] | next[1567] [–][1568]
+   I suggest to use https://github.com/simonw/rodney[1569] instead
+
+   reply[1570]
+
+   [s.gif]
+
+   meowface[1572] 23 hours ago[1573] | parent[1574] | next[1575] [–][1576]
+   Unfortunately there are like a billion competitors to this right now
+   (including Playwright MCP, Playwright CLI, the new baked-in Playwright
+   feature in Codex /experimental, Claude Code for Chrome...) and I can
+   never quite decide if or when I should try to switch. I'm still just
+   using the ordinary Playwright MCP server in both Codex and Claude Code,
+   for the time being.
+
+   reply[1577]
+
+   [s.gif]
+
+   bartek_gdn[1579] 21 hours ago[1580] | root[1581] | parent[1582] |
+   next[1583] [–][1584]
+   I would use whatever you are comfortable with, I wanted a similar tool
+   so I coded my own. Smaller API so that understand what is going on and
+   it is easy not to get lost
+
+   https://news.ycombinator.com/item?id=47207790[1585]
+
+   reply[1586]
+
+   [s.gif]
+
+   speedgoose[1588] 1 day ago[1589] | prev[1590] | next[1591] [–][1592]
+   Interesting. MCP APIs can be useful for humans too.
+
+   Chrome's dev tools already had an API [1], but perhaps the new MCP one
+   is more user friendly, as one main requirement of MCP APIs is to be
+   understood and used correctly by current gen AI agents.
+
+   [1]: https://chromedevtools.github.io/devtools-protocol/[1593]
+
+   reply[1594]
+
+   [s.gif]
+
+   netdur[1596] 21 hours ago[1597] | prev[1598] | next[1599] [–][1600]
+   I wrote an ai agent that do chrome testing, yes, chrome MCP do work
+   https://github.com/netdur/hugind/tree/main/agent/chrome_test...[1601]
+
+   reply[1602]
+
+   [s.gif]
+
+   yan5xu[1604] 12 hours ago[1605] | prev[1606] | next[1607] [–][1608]
+   I built something in this space, bb-browser
+   (https://github.com/epiral/bb-browser[1609]). Same CDP connection, but
+   the approach is honestly kind of cheating.
+
+   Instead of giving agents browser primitives like snapshot, click, fill,
+   I wrapped websites into CLI commands. It connects via CDP to a managed
+   Chrome where you're already logged in, then runs small JS functions
+   that call the site's own internal APIs. No headless browser, no stolen
+   cookies, no API keys. Your browser is already the best place for fetch
+   to happen. It has all the cookies, sessions, auth state. Traditional
+   crawlers spend so much effort on login flows, CSRF tokens, CAPTCHAs,
+   anti-bot detection... all of that just disappears when you fetch from
+   inside the browser itself. Frontend engineers would probably hate me
+   for this because it's really hard to defend against.
+
+   So instead of snapshot the DOM (easily 50K+ tokens), find element,
+   click, snapshot again, parse... you just run
+
+  bb-browser site twitter/feed
+
+   and get structured JSON back.
+
+   Here's the thing I keep thinking about though. Operating websites
+   through raw CDP is a genuinely hard problem. A model needs to
+   understand page structure, find the right elements, handle dynamic
+   loading, deal with SPAs. That takes a SOTA model. But calling a CLI
+   command? Any model can do that. So the SOTA model only needs to run
+   once, to write the adapter. After that, even a small open-source model
+   runs "bb-browser site reddit/hot" just fine.
+
+   And not everyone even needs to write adapters themselves. I created a
+   community repo, bb-sites (https://github.com/epiral/bb-sites[1610]),
+   where people freely contribute adapters for different websites. So in a
+   sense, someone with just an open-source model can already feel the real
+   impact of agents in their daily workflow. Agents shouldn't be a
+   privilege only for people who can access SOTA models and afford the
+   token costs.
+
+   There's a guide command baked in so if you do want to add a new site,
+   you can tell your agent "turn this website into a CLI" and it
+   reverse-engineers the site's APIs and writes the adapter.
+
+   v0.8.x dropped the Chrome extension entirely. Pure CDP, managed Chrome
+   instance. "npm install -g bb-browser" and it works.
+
+   reply[1611]
+
+   [s.gif]
+
+   anesxvito[1613] 22 hours ago[1614] | prev[1615] | next[1616] [–][1617]
+   Been using MCP tooling heavily for a few months and browser debugging
+   integration is one of those things that sounds gimmicky until you
+   actually try it. The real question is whether it handles flaky async
+   state reliably or just hallucinates what it thinks the DOM looks like?
+
+   reply[1618]
+
+   [s.gif]
+
+   tomcasaburi[1620] 12 hours ago[1621] | prev[1622] | next[1623]
+   [–][1624]
+   imo a much better setup is using playwright-cli + some skill.md files
+   for profiling (for example, I have a skill using aidenybai/react-scan
+   for frontend react profiling). token efficient, fast and more
+   customizable/upgradable based on your workflow.
+   vercel-labs/agent-browser is also a good alternative.
+
+   reply[1625]
+
+   [s.gif]
+
+   glerk[1627] 23 hours ago[1628] | prev[1629] | next[1630] [–][1631]
+   Note that this is a mega token guzzler in case you’re paying for your
+   own tokens!
+
+   reply[1632]
+
+   [s.gif]
+
+   bartek_gdn[1634] 21 hours ago[1635] | prev[1636] | next[1637] [–][1638]
+   My approach is a thin cli wrapper instead.
+
+   https://news.ycombinator.com/item?id=47207790[1639]
+
+   reply[1640]
+
+   [s.gif]
+
+   oldeucryptoboi[1642] 23 hours ago[1643] | prev[1644] | next[1645]
+   [–][1646]
+   I tell Claude to use playwright so I don't even need to do the setup
+   myself.
+
+   reply[1647]
+
+   [s.gif]
+
+   nomilk[1649] 23 hours ago[1650] | parent[1651] | next[1652] [–][1653]
+   Similarly, cursor has a built in browser and visit localhost to see the
+   results in the browser. Although I don't use it much (I probably
+   should).
+
+   reply[1654]
+
+   [s.gif]
+
+   pritesh1908[1656] 23 hours ago[1657] | prev[1658] | next[1659]
+   [–][1660]
+   I have been using Playwright for a fairly long time now. Do checkout
+
+   reply[1661]
+
+   [s.gif]
+
+   jedisct1[1663] 8 hours ago[1664] | prev[1665] | next[1666] [–][1667]
+   For context extraction, Lightpanda is a really great option. Much
+   faster than Chrome, and it comes with a built-in MCP server.
+
+   However, it will not fill forms, etc. But it can be combined with
+   agent-browser to get the best of both worlds:
+   https://swival.dev/pages/web-browsing.html[1668]
+
+   reply[1669]
+
+   [s.gif]
+
+   teaearlgraycold[1671] 21 hours ago[1672] | prev[1673] | next[1674]
+   [–][1675]
+   I love how in their demo video where they center an element it ends up
+   off-center.
+
+   reply[1676]
+
+   [s.gif]
+
+   slrainka[1678] 23 hours ago[1679] | prev[1680] | next[1681] [–][1682]
+   chrome-cli with remote developer port has been working fine this entire
+   time.
+
+   reply[1683]
+
+   [s.gif]
+
+   JKolios[1685] 23 hours ago[1686] | prev[1687] | next[1688] [–][1689]
+   Now that there's widespread direct connectivity between agents and
+   browser sessions, are CAPTCHAs even relevant anymore?
+
+   reply[1690]
+
+[s.gif]
+
+              wuxiaoxia88[1692] 11 hours ago[1693] | prev[1694] | next[1695]
+              [–][1696]
+              so good openclaw automation extensions, i like it.
+
+              reply[1697]
+
+[s.gif]
+
+              wuxiaoxia88[1699] 11 hours ago[1700] | prev[1701] | next[1702]
+              [–][1703]
+              so good browser automation extensions. i like it
+
+              reply[1704]
+
+   [s.gif]
+
+   m00dy[1706] 17 hours ago[1707] | prev[1708] | next[1709] [–][1710]
+   Connecting a remote VPS to a local Chrome session is usually a
+   headache. It gets complicated when your Claw setup is on the server but
+   the browser session stays on your own machine. I ended up using
+   Proxybase’s relay [0] to bridge the gap, and it actually solved the
+   connection issues for me.
+
+   [0] https://relay.proxybase.xyz[1711]
+
+   reply[1712]
+
+   [s.gif]
+
+   holoduke[1714] 21 hours ago[1715] | prev[1716] | next[1717] [–][1718]
+   One tip for the illegal scrapers or automators out there. Casperjs and
+   phanthomjs are still working very well for anti bot detection. These
+   are very old libs no longer maintained. But I can even scrape and
+   authenticate at my banks.
+
+   reply[1719]
+
+   [s.gif]
+
+   Yokohiii[1721] 1 day ago[1722] | prev[1723] | next[1724] [–][1725]
+   Was already eye rolling about the headline. Then I realized it's from
+   chrome.
+
+   Hoping from some good stories from open claw users that permanently run
+   debug sessions.
+
+   reply[1726]
+
+   [s.gif][1727]
+
+                                [s.gif][1728]
+
+   16 hours ago[1729] | prev[1730] | next[1731] [2 more][1732]
+   [dead]
+
+
+   [s.gif]
+
+   hugs[1734] 15 hours ago[1735] | parent[1736] | next[1737] [–][1738]
+   that is the MCP vs CLI debate.
+
+   reply[1739]
+
+   [s.gif]
+
+   jerrygoyal[1741] 17 hours ago[1742] | prev[1743] | next[1744] [–][1745]
+   It's from 2025. The post should have a year tag.
+
+   reply[1746]
+
+   [s.gif]
+
+   tomhow[1748] 16 hours ago[1749] | parent[1750] | next[1751] [–][1752]
+   Done, thanks!
+
+   reply[1753]
+
+   [s.gif][1754]
+
+                                [s.gif][1755]
+
+   AlexDunit[1756] 1 day ago[1757] | prev[1758] | next[1759] [4
+   more][1760]
+   [flagged]
+
+
+   [s.gif]
+
+   David-Brug-Ai[1762] 1 day ago[1763] | parent[1764] | next[1765]
+   [–][1766]
+   This is the exact problem that pushed me to build a security proxy for
+   MCP tool calls. The permission model in most MCP setups is basically
+   binary, either the agent can use the tool or it can't. There's nothing
+   watching what it does with that access once its granted.
+
+   The approach I landed on was a deterministic enforcement pipeline that
+   sits between the agent and the MCP server, so every tool call gets
+   checked for things like SSRF (DNS resolve + private IP blocking),
+   credential leakage in outbound params, and path traversal, before the
+   call hits the real server. No LLM in that path, just pattern matching
+   and policy rules, so it adds single-digit ms overhead.
+
+   The DevTools case is interesting because the attack surface is the page
+   content itself. A crafted page could inject tool calls via prompt
+   injection. Having the proxy there means even if the agent gets tricked,
+   the exfiltration attempt gets caught at the egress layer.
+
+   reply[1767]
+
+[s.gif]
+
+              rob[1769] 1 day ago[1770] | parent[1771] | prev[1772] | next[1773]
+              [–][1774]
+              Someone left their bot on default settings.
+
+              reply[1775]
+
+[s.gif]
+
+              Bengalilol[1777] 22 hours ago[1778] | root[1779] | parent[1780] |
+              next[1781] [–][1782]
+              The other reply to this 'bot' looks like another default thing:
+              <https://news.ycombinator.com/threads?id=David-Brug-Ai[1783]>
+
+              reply[1784]
+
+   [s.gif][1785]
+
+                                [s.gif][1786]
+
+   Sonofg0tham[1787] 1 day ago[1788] | prev[1789] | next[1790] [4
+   more][1791]
+   [flagged]
+
+
+   [s.gif]
+
+   simianwords[1793] 1 day ago[1794] | parent[1795] | next[1796] [–][1797]
+   AI
+
+   reply[1798]
+
+   [s.gif]
+
+   rzmmm[1800] 23 hours ago[1801] | root[1802] | parent[1803] | next[1804]
+   [–][1805]
+   Yes. Can someone tell me why even HN has bots. For selling upvotes to
+   advertisement purposes?
+
+   reply[1806]
+
+   [s.gif]
+
+   Sonofg0tham[1808] 22 hours ago[1809] | root[1810] | parent[1811] |
+   next[1812] [–][1813]
+   I'm not a bot and definitely not advertising - I'm new on HN and trying
+   to contribute with a few comments where I can.
+
+   reply[1814]
+
+   [s.gif][1815]
+
+                                [s.gif][1816]
+
+   paseante[1817] 21 hours ago[1818] | prev[1819] [9 more][1820]
+   [flagged]
+
+
+   [s.gif]
+
+   raincole[1822] 20 hours ago[1823] | parent[1824] | next[1825] [–][1826]
+   The ultimate conflict of interest here is that the sites people want to
+   crawl the most are the ones that want to be crawled by machines the
+   least (e.g. Youtube). So people will end up emulating genuine human
+   users one way or another.
+
+   reply[1827]
+
+   [s.gif]
+
+   maxaw[1829] 20 hours ago[1830] | parent[1831] | prev[1832] | next[1833]
+   [–][1834]
+   Fully agree. Will take some time though as immediate incentive not
+   clear for consumer facing companies to do extra work to help ppl bypass
+   website layer. But I think consumers will begin to demand it, once they
+   experience it through their agent. Eg pizza company A exposes an api
+   alongside website and pizza company B doesn’t, and consumer notices
+   their agent is 10x+ faster interacting with company A and begins to
+   question why.
+
+   reply[1835]
+
+   [s.gif]
+
+   codybontecou[1837] 21 hours ago[1838] | parent[1839] | prev[1840] |
+   next[1841] [–][1842]
+   Is this just a well-documented API?
+
+   reply[1843]
+
+   [s.gif]
+
+   Lucasoato[1845] 20 hours ago[1846] | parent[1847] | prev[1848] |
+   next[1849] [–][1850]
+   They’re trying to solve it by making it easier to get Markdown versions
+   of websites.
+
+   For example, you can get a markdown out of most OpenAI documentation by
+   appending .md like this:
+   https://developers.openai.com/api/docs/libraries.md[1851]
+
+   Not definitive, but still useful.
+
+   reply[1852]
+
+   [s.gif]
+
+   ElectricalUnion[1854] 21 hours ago[1855] | parent[1856] | prev[1857] |
+   next[1858] [–][1859]
+   > interface designed for humans — the DOM.
+
+   Citation needed.
+
+   > The web already went through this evolution once: we went from
+   screen-scraping HTML to structured APIs. Now we're regressing back to
+   scraping because agents need to interact with sites that only have
+   human interfaces.
+
+   To me, sites that "only have human interfaces" are more likely that not
+   be that way totally on purpose, attempting to maximize human
+   retention/engagement and are more likely to require strict anti-bot
+   measures like Proof-of-Work to be usable at all.
+
+   reply[1860]
+
+   [s.gif]
+
+   socalgal2[1862] 20 hours ago[1863] | parent[1864] | prev[1865] |
+   next[1866] [–][1867]
+   I feel like the fact tha HTML is end result is exactly why the Web is
+   so successful. Yes, structured APIs sound great, until you realize the
+   API owners will never give you the data you actually want via their
+   APIs. This is why HTML has done so well. Why extensions exist. And why
+   it's better for browser automation.
+
+   reply[1868]
+
+   [s.gif]
+
+   imiric[1870] 21 hours ago[1871] | parent[1872] | prev[1873] |
+   next[1874] [–][1875]
+   > What we actually need is a standard for websites to expose a
+   machine-readable interaction layer alongside the human one.
+
+   We had this 20 years ago with the Semantic Web movement, XHTML, and
+   microformats. Sadly, it didn't pan out for various reasons, most of
+   them non-technical. There's remnants of it today with RSS feeds, which
+   is either unsupported or badly supported by most web sites.
+
+   Once advertising became the dominant business model on the web, it
+   wasn't in publishers' interest to provide a machine-readable format of
+   their content. Adtech corporations took control of the web, and here we
+   are. Nowadays even API access is tightly controlled (see Reddit,
+   Twitter, etc.).
+
+   So your idea will never pan out in practice. We'll have to continue to
+   rely on hacks and scraping will continue to be a gray area. These new
+   tools make automated scraping easier, for better or worse, but
+   publishers will find new ways to mitigate it. And so it goes.
+
+   Besides, if these new tools are "superintelligent", surely they're able
+   to navigate a web site. Captchas are broken and bot detection
+   algorithms (or "AI" themselves) are unreliable. So I'd say the leverage
+   is on the consumer side, for now.
+
+   reply[1876]
+
+   [s.gif]
+
+   quotemstr[1878] 21 hours ago[1879] | parent[1880] | prev[1881]
+   [–][1882]
+   > expose a machine-readable interaction layer alongside the human one
+
+   Which is called ARIA and has been a thing forever.
+
+   reply[1883]
+   [s.gif][1884]
+
+   Guidelines[1885] | FAQ[1886] | Lists[1887] | API[1888] | Security[1889]
+              | Legal[1890] | Apply to YC[1891] | Contact[1892]
+                          Search: [1893]___________
