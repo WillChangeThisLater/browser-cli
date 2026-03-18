@@ -40,6 +40,7 @@ export async function go(page: Page, url: string, options: GoOptions = {}): Prom
       const client = await page.target().createCDPSession();
       const { targetInfo } = await client.send('Target.getTargetInfo');
       const tabId = targetInfo.targetId;
+      await client.detach();
       
       return { tabId, title, finalUrl };
     })();

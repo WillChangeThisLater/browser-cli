@@ -328,6 +328,7 @@ export async function inspect(page: Page, selector: string | undefined, options:
       const client = await page.target().createCDPSession();
       const { targetInfo } = await client.send('Target.getTargetInfo');
       const tabId = targetInfo.targetId;
+      await client.detach();
       
       return { tabId, pageUrl, title, elements };
     })();

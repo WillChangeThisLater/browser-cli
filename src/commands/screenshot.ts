@@ -64,6 +64,7 @@ export async function screenshot(page: Page, outputPath: string, options: Screen
       const client = await page.target().createCDPSession();
       const { targetInfo } = await client.send('Target.getTargetInfo');
       const tabId = targetInfo.targetId;
+      await client.detach();
       
       return { tabId, pageUrl, title, size: stats.size, sizeKB, fullPage, type };
     })();

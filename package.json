@@ -10,16 +10,18 @@
     "build": "tsc",
     "start": "ts-node src/index.ts",
     "dev": "ts-node src/index.ts",
-    "test": "echo \"No tests yet\""
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "commander": "^12.0.0",
     "puppeteer-core": "^22.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^20.19.37",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.0"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -106,6 +106,7 @@ export async function scroll(page: Page, options: ScrollOptions = {}): Promise<v
       const client = await page.target().createCDPSession();
       const { targetInfo } = await client.send('Target.getTargetInfo');
       const tabId = targetInfo.targetId;
+      await client.detach();
       
       return { tabId, pageUrl, title, scrollResult };
     })();

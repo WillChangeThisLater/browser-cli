@@ -40,6 +40,7 @@ export async function evalJs(page: Page, code: string, options: EvalOptions = {}
       const client = await page.target().createCDPSession();
       const { targetInfo } = await client.send('Target.getTargetInfo');
       const tabId = targetInfo.targetId;
+      await client.detach();
       
       return { tabId, pageUrl, title, result };
     })();

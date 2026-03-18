@@ -82,6 +82,7 @@ export async function type(page: Page, selector: string, text: string, options: 
       const client = await page.target().createCDPSession();
       const { targetInfo } = await client.send('Target.getTargetInfo');
       const tabId = targetInfo.targetId;
+      await client.detach();
       
       return { tabId, pageUrl, title, inputValue };
     })();
