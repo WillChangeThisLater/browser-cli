@@ -8,7 +8,8 @@ async function go(page, url, options = {}) {
     const waitLoadState = options.waitLoadState || 'domcontentloaded';
     const timeout = options.timeout || 120000;
     const startTime = Date.now();
-    console.error(`[go] Navigating to ${url} (wait: ${waitLoadState}, timeout: ${timeout}ms)`);
+    const startTs = new Date().toISOString();
+    console.error(`[${startTs}] [go] Navigating to ${url} (wait: ${waitLoadState}, timeout: ${timeout}ms)`);
     // Ensure URL has protocol
     let targetUrl = url;
     if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('file://')) {
@@ -44,12 +45,15 @@ async function go(page, url, options = {}) {
     }
     catch (error) {
         const elapsed = Date.now() - startTime;
-        console.error(`[go] Failed after ${elapsed}ms: ${error.message}`);
+        const endTs = new Date().toISOString();
+        console.error(`[${endTs}] [go] Failed after ${elapsed}ms: ${error.message}`);
         console.log(JSON.stringify({
             success: false,
             error: error.message,
             url: targetUrl,
             elapsed,
+            startTime: startTs,
+            endTime: endTs,
         }));
         process.exit(2);
     }

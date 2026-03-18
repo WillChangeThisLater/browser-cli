@@ -13,6 +13,8 @@ async function find(page, text, options = {}) {
     const url = options.url;
     const tag = options.tag;
     const exact = options.exact ?? false;
+    const role = options.role;
+    const ariaLabel = options.ariaLabel;
     const timeout = options.timeout || 120000;
     const startTime = Date.now();
     // Navigate if URL provided
@@ -24,10 +26,10 @@ async function find(page, text, options = {}) {
         }
         await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: timeout });
     }
-    console.error(`[find] Searching for "${text}"${tag ? ` in <${tag}>` : ''}${exact ? ' (exact match)' : ''}`);
+    console.error(`[find] Searching for "${text}"${tag ? ` in <${tag}>` : ''}${exact ? ' (exact match)' : ''}${role ? ` with role="${role}"` : ''}${ariaLabel ? ` aria-label="${ariaLabel}"` : ''}`);
     try {
         const operationPromise = (async () => {
-            const elements = await page.evaluate((searchText, targetTag, exactMatch) => {
+            const elements = await page.evaluate((data) => {
                 const allElements = document.querySelectorAll('*');
                 const results = [];
                 for (let i = 0; i < allElements.length; i++) {
@@ -36,16 +38,22 @@ async function find(page, text, options = {}) {
                     if (el.offsetParent === null)
                         continue;
                     // Filter by tag if specified
-                    if (targetTag && el.tagName.toLowerCase() !== targetTag.toLowerCase())
+                    if (data.targetTag && el.tagName.toLowerCase() !== data.targetTag.toLowerCase())
+                        continue;
+                    // Filter by ARIA role if specified
+                    if (data.role && el.getAttribute('role') !== data.role)
+                        continue;
+                    // Filter by aria-label if specified
+                    if (data.ariaLabel && !el.getAttribute('aria-label')?.includes(data.ariaLabel))
                         continue;
                     // Get text content
                     const elText = el.innerText?.trim() || el.textContent?.trim() || '';
                     if (!elText)
                         continue;
                     // Check for text match
-                    const matches = exactMatch
-                        ? elText === searchText
-                        : elText.toLowerCase().includes(searchText.toLowerCase());
+                    const matches = data.exactMatch
+                        ? elText === data.searchText
+                        : elText.toLowerCase().includes(data.searchText.toLowerCase());
                     if (!matches)
                         continue;
                     // Skip very long text (likely page content, not actionable element)
@@ -91,7 +99,7 @@ async function find(page, text, options = {}) {
                 });
                 // Limit to top 20 results
                 return results.slice(0, 20);
-            }, text, tag, exact);
+            }, { searchText: text, targetTag: tag, exactMatch: exact, role, ariaLabel });
             const pageUrl = page.url();
             const title = await page.evaluate(() => document.title);
             const client = await page.target().createCDPSession();

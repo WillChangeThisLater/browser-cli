@@ -29,6 +29,7 @@ export interface Session {
  */
 export async function createSession(options: SessionOptions = {}): Promise<Session> {
   const timeout = options.timeout || 120000;
+  const startTs = new Date().toISOString();
   
   const port = options.port || parseInt(process.env.BROWSER_PORT || '', 10);
   const ws = options.ws || process.env.BROWSER_WS;
@@ -46,7 +47,7 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
 
   // Case 1: Attach to specific existing tab
   if (tabId && port) {
-    console.error(`[session] Attaching to existing tab: ${tabId}`);
+    console.error(`[${startTs}] [session] Attaching to existing tab: ${tabId}`);
     
     // First verify tab exists
     const tabsResponse = await fetch(`http://localhost:${port}/json`);
@@ -100,14 +101,14 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
       await browser.disconnect().catch(() => {});
     };
     
-    console.error(`[session] Attached to tab ${tabId}`);
+    console.error(`[${startTs}] [session] Attached to tab ${tabId}`);
     return { browser, page, tabId: actualTabId, options, close };
   }
 
   // Case 2: Connect to existing Chrome (will create new tab)
   if (ws || port) {
     const connectUrl = ws || `http://localhost:${port}`;
-    console.error(`[session] Connecting to Chrome: ${connectUrl}`);
+    console.error(`[${startTs}] [session] Connecting to Chrome: ${connectUrl}`);
     
     browser = await puppeteer.connect({
       browserURL: ws ? undefined : connectUrl,
@@ -123,7 +124,7 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
       await browser.disconnect().catch(() => {});
     };
     
-    console.error('[session] Connected to Chrome, created new tab');
+    console.error(`[${startTs}] [session] Connected to Chrome, created new tab`);
     return { browser, page, options, close };
   }
 
@@ -131,7 +132,7 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
   const headless = options.headless ?? false;
   const slowMo = options.slowMo ?? 0;
   
-  console.error(`[session] Launching Chrome (headless: ${headless})`);
+  console.error(`[${startTs}] [session] Launching Chrome (headless: ${headless})`);
   
   browser = await puppeteer.launch({
     headless,
@@ -150,6 +151,6 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
     await browser.close().catch(() => {});
   };
   
-  console.error('[session] Browser launched');
+  console.error(`[${startTs}] [session] Browser launched`);
   return { browser, page, options, close };
 }

@@ -16,6 +16,7 @@ const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
  */
 async function createSession(options = {}) {
     const timeout = options.timeout || 120000;
+    const startTs = new Date().toISOString();
     const port = options.port || parseInt(process.env.BROWSER_PORT || '', 10);
     const ws = options.ws || process.env.BROWSER_WS;
     const tabId = options.tabId;
@@ -29,7 +30,7 @@ async function createSession(options = {}) {
     let actualTabId;
     // Case 1: Attach to specific existing tab
     if (tabId && port) {
-        console.error(`[session] Attaching to existing tab: ${tabId}`);
+        console.error(`[${startTs}] [session] Attaching to existing tab: ${tabId}`);
         // First verify tab exists
         const tabsResponse = await fetch(`http://localhost:${port}/json`);
         const tabs = await tabsResponse.json();
@@ -72,13 +73,13 @@ async function createSession(options = {}) {
             console.error('[session] Detaching from tab (tab stays open in Chrome)');
             await browser.disconnect().catch(() => { });
         };
-        console.error(`[session] Attached to tab ${tabId}`);
+        console.error(`[${startTs}] [session] Attached to tab ${tabId}`);
         return { browser, page, tabId: actualTabId, options, close };
     }
     // Case 2: Connect to existing Chrome (will create new tab)
     if (ws || port) {
         const connectUrl = ws || `http://localhost:${port}`;
-        console.error(`[session] Connecting to Chrome: ${connectUrl}`);
+        console.error(`[${startTs}] [session] Connecting to Chrome: ${connectUrl}`);
         browser = await puppeteer_core_1.default.connect({
             browserURL: ws ? undefined : connectUrl,
             browserWSEndpoint: ws,
@@ -90,13 +91,13 @@ async function createSession(options = {}) {
             console.error('[session] Detaching from Chrome (tab stays open)');
             await browser.disconnect().catch(() => { });
         };
-        console.error('[session] Connected to Chrome, created new tab');
+        console.error(`[${startTs}] [session] Connected to Chrome, created new tab`);
         return { browser, page, options, close };
     }
     // Case 3: Launch new browser
     const headless = options.headless ?? false;
     const slowMo = options.slowMo ?? 0;
-    console.error(`[session] Launching Chrome (headless: ${headless})`);
+    console.error(`[${startTs}] [session] Launching Chrome (headless: ${headless})`);
     browser = await puppeteer_core_1.default.launch({
         headless,
         slowMo,
@@ -111,7 +112,7 @@ async function createSession(options = {}) {
         console.error('[session] Closing browser');
         await browser.close().catch(() => { });
     };
-    console.error('[session] Browser launched');
+    console.error(`[${startTs}] [session] Browser launched`);
     return { browser, page, options, close };
 }
 //# sourceMappingURL=session.js.map

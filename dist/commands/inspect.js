@@ -8,6 +8,7 @@ async function inspect(page, selector, options = {}) {
     const url = options.url;
     const all = options.all ?? false;
     const depth = options.depth ?? 5;
+    const showAria = options.aria ?? false;
     const timeout = options.timeout || 120000;
     const startTime = Date.now();
     // Navigate if URL provided
@@ -34,6 +35,19 @@ async function inspect(page, selector, options = {}) {
                         const attr = el.attributes[i];
                         attrs[attr.name] = attr.value;
                     }
+                    // Extract ARIA attributes if requested
+                    const ariaInfo = true ? {
+                        role: el.getAttribute('role') || undefined,
+                        label: el.getAttribute('aria-label') || undefined,
+                        labelledBy: el.getAttribute('aria-labelledby') || undefined,
+                        describedBy: el.getAttribute('aria-describedby') || undefined,
+                        expanded: el.getAttribute('aria-expanded') || undefined,
+                        pressed: el.getAttribute('aria-pressed') || undefined,
+                        selected: el.getAttribute('aria-selected') || undefined,
+                        checked: el.getAttribute('aria-checked') || undefined,
+                        disabled: el.getAttribute('aria-disabled') || undefined,
+                        hidden: el.getAttribute('aria-hidden') || undefined,
+                    } : undefined;
                     return {
                         selector: sel,
                         tag: el.tagName.toLowerCase(),
@@ -49,17 +63,40 @@ async function inspect(page, selector, options = {}) {
                             width: Math.round(rect.width),
                             height: Math.round(rect.height),
                         },
+                        aria: ariaInfo,
                         attributes: attrs,
                     };
                 }, selector);
                 if (!result) {
                     throw new Error(`Element not found: ${selector}`);
                 }
+                // Add ARIA attributes if requested
+                if (showAria && result.aria === undefined) {
+                    const ariaResult = await page.evaluate((sel) => {
+                        const el = document.querySelector(sel);
+                        if (!el)
+                            return null;
+                        return {
+                            role: el.getAttribute('role') || undefined,
+                            label: el.getAttribute('aria-label') || undefined,
+                            labelledBy: el.getAttribute('aria-labelledby') || undefined,
+                            describedBy: el.getAttribute('aria-describedby') || undefined,
+                            expanded: el.getAttribute('aria-expanded') || undefined,
+                            pressed: el.getAttribute('aria-pressed') || undefined,
+                            selected: el.getAttribute('aria-selected') || undefined,
+                            checked: el.getAttribute('aria-checked') || undefined,
+                            disabled: el.getAttribute('aria-disabled') || undefined,
+                            hidden: el.getAttribute('aria-hidden') || undefined,
+                        };
+                    }, selector);
+                    result.aria = ariaResult || undefined;
+                }
                 elements = result;
             }
             else if (all) {
-                const result = await page.evaluate((maxDepth) => {
+                const result = await page.evaluate((data) => {
                     function buildTree(el, currentDepth) {
+                        const maxDepth = data.maxDepth;
                         if (currentDepth > maxDepth)
                             return null;
                         const htmlEl = el;
@@ -69,6 +106,19 @@ async function inspect(page, selector, options = {}) {
                             const attr = el.attributes[i];
                             attrs[attr.name] = attr.value;
                         }
+                        // Extract ARIA attributes if requested
+                        const ariaInfo = showAria ? {
+                            role: el.getAttribute('role') || undefined,
+                            label: el.getAttribute('aria-label') || undefined,
+                            labelledBy: el.getAttribute('aria-labelledby') || undefined,
+                            describedBy: el.getAttribute('aria-describedby') || undefined,
+                            expanded: el.getAttribute('aria-expanded') || undefined,
+                            pressed: el.getAttribute('aria-pressed') || undefined,
+                            selected: el.getAttribute('aria-selected') || undefined,
+                            checked: el.getAttribute('aria-checked') || undefined,
+                            disabled: el.getAttribute('aria-disabled') || undefined,
+                            hidden: el.getAttribute('aria-hidden') || undefined,
+                        } : undefined;
                         const info = {
                             selector: el.id ? `#${el.id}` :
                                 el.className ? `${el.tagName.toLowerCase()}.${el.className.split(' ')[0]}` :
@@ -84,6 +134,7 @@ async function inspect(page, selector, options = {}) {
                                 width: Math.round(rect.width),
                                 height: Math.round(rect.height),
                             },
+                            aria: ariaInfo,
                             attributes: attrs,
                         };
                         const children = [];
@@ -99,14 +150,46 @@ async function inspect(page, selector, options = {}) {
                         return info;
                     }
                     return buildTree(document.documentElement, 0);
-                }, depth);
+                }, { maxDepth: depth });
                 if (!result) {
                     throw new Error('Failed to build DOM tree');
                 }
-                elements = result;
+                const treeResult = result;
+                // Add ARIA to all elements if requested (recursive)
+                if (showAria) {
+                    const addAriaToTree = async (elInfo) => {
+                        if (elInfo.aria === undefined) {
+                            const ariaVal = await page.evaluate((sel) => {
+                                const el = document.querySelector(sel);
+                                if (!el)
+                                    return null;
+                                return {
+                                    role: el.getAttribute('role') || undefined,
+                                    label: el.getAttribute('aria-label') || undefined,
+                                    labelledBy: el.getAttribute('aria-labelledby') || undefined,
+                                    describedBy: el.getAttribute('aria-describedby') || undefined,
+                                    expanded: el.getAttribute('aria-expanded') || undefined,
+                                    pressed: el.getAttribute('aria-pressed') || undefined,
+                                    selected: el.getAttribute('aria-selected') || undefined,
+                                    checked: el.getAttribute('aria-checked') || undefined,
+                                    disabled: el.getAttribute('aria-disabled') || undefined,
+                                    hidden: el.getAttribute('aria-hidden') || undefined,
+                                };
+                            }, elInfo.selector);
+                            elInfo.aria = ariaVal || undefined;
+                        }
+                        if (elInfo.children) {
+                            for (const child of elInfo.children) {
+                                await addAriaToTree(child);
+                            }
+                        }
+                    };
+                    await addAriaToTree(treeResult);
+                }
+                elements = treeResult;
             }
             else {
-                elements = await page.evaluate(() => {
+                elements = await page.evaluate((showAria) => {
                     const interactiveSelectors = [
                         'button',
                         'a[href]',
@@ -131,6 +214,19 @@ async function inspect(page, selector, options = {}) {
                         const rect = el.getBoundingClientRect();
                         if (rect.width < 5 || rect.height < 5)
                             continue;
+                        // Extract ARIA attributes if requested
+                        const ariaInfo = showAria ? {
+                            role: el.getAttribute('role') || undefined,
+                            label: el.getAttribute('aria-label') || undefined,
+                            labelledBy: el.getAttribute('aria-labelledby') || undefined,
+                            describedBy: el.getAttribute('aria-describedby') || undefined,
+                            expanded: el.getAttribute('aria-expanded') || undefined,
+                            pressed: el.getAttribute('aria-pressed') || undefined,
+                            selected: el.getAttribute('aria-selected') || undefined,
+                            checked: el.getAttribute('aria-checked') || undefined,
+                            disabled: el.getAttribute('aria-disabled') || undefined,
+                            hidden: el.getAttribute('aria-hidden') || undefined,
+                        } : undefined;
                         const info = {
                             selector: el.id ? `#${el.id}` :
                                 el.className ?
@@ -149,6 +245,7 @@ async function inspect(page, selector, options = {}) {
                                 width: Math.round(rect.width),
                                 height: Math.round(rect.height),
                             },
+                            aria: ariaInfo,
                         };
                         results.push(info);
                     }
@@ -159,7 +256,7 @@ async function inspect(page, selector, options = {}) {
                         return (a.bounds?.x || 0) - (b.bounds?.x || 0);
                     });
                     return results;
-                });
+                }, showAria);
             }
             const pageUrl = page.url();
             const title = await page.evaluate(() => document.title);

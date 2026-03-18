@@ -9,7 +9,21 @@ export interface InspectOptions {
   all?: boolean;
   depth?: number;
   selector?: string;
+  aria?: boolean;
   timeout?: number;
+}
+
+export interface AriaInfo {
+  role?: string;
+  label?: string;
+  labelledBy?: string;
+  describedBy?: string;
+  expanded?: string;
+  pressed?: string;
+  selected?: string;
+  checked?: string;
+  disabled?: string;
+  hidden?: string;
 }
 
 export interface ElementInfo {
@@ -27,6 +41,7 @@ export interface ElementInfo {
     width: number;
     height: number;
   };
+  aria?: AriaInfo;
   attributes?: Record<string, string>;
   children?: ElementInfo[];
 }
@@ -35,6 +50,7 @@ export async function inspect(page: Page, selector: string | undefined, options:
   const url = options.url;
   const all = options.all ?? false;
   const depth = options.depth ?? 5;
+  const showAria = options.aria ?? false;
   const timeout = options.timeout || 120000;
   const startTime = Date.now();
   
@@ -66,6 +82,20 @@ export async function inspect(page: Page, selector: string | undefined, options:
             attrs[attr.name] = attr.value;
           }
           
+          // Extract ARIA attributes if requested
+          const ariaInfo: AriaInfo | undefined = true ? {
+            role: el.getAttribute('role') || undefined,
+            label: el.getAttribute('aria-label') || undefined,
+            labelledBy: el.getAttribute('aria-labelledby') || undefined,
+            describedBy: el.getAttribute('aria-describedby') || undefined,
+            expanded: el.getAttribute('aria-expanded') || undefined,
+            pressed: el.getAttribute('aria-pressed') || undefined,
+            selected: el.getAttribute('aria-selected') || undefined,
+            checked: el.getAttribute('aria-checked') || undefined,
+            disabled: el.getAttribute('aria-disabled') || undefined,
+            hidden: el.getAttribute('aria-hidden') || undefined,
+          } : undefined;
+          
           return {
             selector: sel,
             tag: el.tagName.toLowerCase(),
@@ -81,17 +111,41 @@ export async function inspect(page: Page, selector: string | undefined, options:
               width: Math.round(rect.width),
               height: Math.round(rect.height),
             },
+            aria: ariaInfo,
             attributes: attrs,
           } as ElementInfo;
-        }, selector);
+               }, selector);
         
         if (!result) {
           throw new Error(`Element not found: ${selector}`);
         }
+        
+        // Add ARIA attributes if requested
+        if (showAria && result.aria === undefined) {
+          const ariaResult = await page.evaluate((sel: string) => {
+            const el = document.querySelector(sel) as HTMLElement;
+            if (!el) return null;
+            return {
+              role: el.getAttribute('role') || undefined,
+              label: el.getAttribute('aria-label') || undefined,
+              labelledBy: el.getAttribute('aria-labelledby') || undefined,
+              describedBy: el.getAttribute('aria-describedby') || undefined,
+              expanded: el.getAttribute('aria-expanded') || undefined,
+              pressed: el.getAttribute('aria-pressed') || undefined,
+              selected: el.getAttribute('aria-selected') || undefined,
+              checked: el.getAttribute('aria-checked') || undefined,
+              disabled: el.getAttribute('aria-disabled') || undefined,
+              hidden: el.getAttribute('aria-hidden') || undefined,
+            };
+          }, selector);
+          result.aria = ariaResult || undefined;
+        }
+        
         elements = result;
       } else if (all) {
-        const result = await page.evaluate((maxDepth: number) => {
-          function buildTree(el: Element, currentDepth: number): ElementInfo | null {
+        const result = await page.evaluate((data: { maxDepth: number }) => {
+                   function buildTree(el: Element, currentDepth: number): ElementInfo | null {
+            const maxDepth = data.maxDepth;
             if (currentDepth > maxDepth) return null;
             
             const htmlEl = el as HTMLElement;
@@ -102,7 +156,21 @@ export async function inspect(page: Page, selector: string | undefined, options:
               attrs[attr.name] = attr.value;
             }
             
-            const info: ElementInfo = {
+            // Extract ARIA attributes if requested
+          const ariaInfo: AriaInfo | undefined = showAria ? {
+            role: el.getAttribute('role') || undefined,
+            label: el.getAttribute('aria-label') || undefined,
+            labelledBy: el.getAttribute('aria-labelledby') || undefined,
+            describedBy: el.getAttribute('aria-describedby') || undefined,
+            expanded: el.getAttribute('aria-expanded') || undefined,
+            pressed: el.getAttribute('aria-pressed') || undefined,
+            selected: el.getAttribute('aria-selected') || undefined,
+            checked: el.getAttribute('aria-checked') || undefined,
+            disabled: el.getAttribute('aria-disabled') || undefined,
+            hidden: el.getAttribute('aria-hidden') || undefined,
+          } : undefined;
+          
+          const info: ElementInfo = {
               selector: el.id ? `#${el.id}` : 
                         el.className ? `${el.tagName.toLowerCase()}.${(el.className as string).split(' ')[0]}` :
                         el.tagName.toLowerCase(),
@@ -117,6 +185,7 @@ export async function inspect(page: Page, selector: string | undefined, options:
                 width: Math.round(rect.width),
                 height: Math.round(rect.height),
               },
+              aria: ariaInfo,
               attributes: attrs,
             };
             
@@ -135,14 +204,47 @@ export async function inspect(page: Page, selector: string | undefined, options:
           }
           
           return buildTree(document.documentElement, 0);
-        }, depth);
+        }, { maxDepth: depth });
         
         if (!result) {
           throw new Error('Failed to build DOM tree');
         }
-        elements = result;
+        const treeResult = result as ElementInfo;
+        
+        // Add ARIA to all elements if requested (recursive)
+        if (showAria) {
+          const addAriaToTree = async (elInfo: ElementInfo) => {
+            if (elInfo.aria === undefined) {
+              const ariaVal = await page.evaluate((sel: string) => {
+                const el = document.querySelector(sel) as HTMLElement;
+                if (!el) return null;
+                return {
+                  role: el.getAttribute('role') || undefined,
+                  label: el.getAttribute('aria-label') || undefined,
+                  labelledBy: el.getAttribute('aria-labelledby') || undefined,
+                  describedBy: el.getAttribute('aria-describedby') || undefined,
+                  expanded: el.getAttribute('aria-expanded') || undefined,
+                  pressed: el.getAttribute('aria-pressed') || undefined,
+                  selected: el.getAttribute('aria-selected') || undefined,
+                  checked: el.getAttribute('aria-checked') || undefined,
+                  disabled: el.getAttribute('aria-disabled') || undefined,
+                  hidden: el.getAttribute('aria-hidden') || undefined,
+                };
+              }, elInfo.selector);
+              elInfo.aria = ariaVal || undefined;
+            }
+            if (elInfo.children) {
+              for (const child of elInfo.children) {
+                await addAriaToTree(child);
+              }
+            }
+          };
+          await addAriaToTree(treeResult);
+        }
+        
+        elements = treeResult;
       } else {
-        elements = await page.evaluate(() => {
+        elements = await page.evaluate((showAria: boolean) => {
           const interactiveSelectors = [
             'button',
             'a[href]',
@@ -170,6 +272,20 @@ export async function inspect(page: Page, selector: string | undefined, options:
             const rect = el.getBoundingClientRect();
             if (rect.width < 5 || rect.height < 5) continue;
             
+            // Extract ARIA attributes if requested
+            const ariaInfo: AriaInfo | undefined = showAria ? {
+              role: el.getAttribute('role') || undefined,
+              label: el.getAttribute('aria-label') || undefined,
+              labelledBy: el.getAttribute('aria-labelledby') || undefined,
+              describedBy: el.getAttribute('aria-describedby') || undefined,
+              expanded: el.getAttribute('aria-expanded') || undefined,
+              pressed: el.getAttribute('aria-pressed') || undefined,
+              selected: el.getAttribute('aria-selected') || undefined,
+              checked: el.getAttribute('aria-checked') || undefined,
+              disabled: el.getAttribute('aria-disabled') || undefined,
+              hidden: el.getAttribute('aria-hidden') || undefined,
+            } : undefined;
+            
             const info: ElementInfo = {
               selector: el.id ? `#${el.id}` : 
                         el.className ? 
@@ -188,6 +304,7 @@ export async function inspect(page: Page, selector: string | undefined, options:
                 width: Math.round(rect.width),
                 height: Math.round(rect.height),
               },
+              aria: ariaInfo,
             };
             
             results.push(info);
@@ -201,7 +318,7 @@ export async function inspect(page: Page, selector: string | undefined, options:
           });
           
           return results;
-        });
+        }, showAria);
       }
       
       const pageUrl = page.url();

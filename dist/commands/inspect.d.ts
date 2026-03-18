@@ -7,7 +7,20 @@ export interface InspectOptions {
     all?: boolean;
     depth?: number;
     selector?: string;
+    aria?: boolean;
     timeout?: number;
+}
+export interface AriaInfo {
+    role?: string;
+    label?: string;
+    labelledBy?: string;
+    describedBy?: string;
+    expanded?: string;
+    pressed?: string;
+    selected?: string;
+    checked?: string;
+    disabled?: string;
+    hidden?: string;
 }
 export interface ElementInfo {
     selector: string;
@@ -24,6 +37,7 @@ export interface ElementInfo {
         width: number;
         height: number;
     };
+    aria?: AriaInfo;
     attributes?: Record<string, string>;
     children?: ElementInfo[];
 }

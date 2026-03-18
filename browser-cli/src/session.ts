@@ -100,7 +100,12 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
     
     const close = async () => {
       console.error('[session] Detaching from tab (tab stays open in Chrome)');
-      await browser.disconnect().catch(() => {});
+      await Promise.race([
+        browser.disconnect(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('disconnect timeout')), 5000)
+        )
+      ]).catch(() => {});
     };
     
     console.error(`[session] Attached to tab ${tabId}`);
@@ -123,7 +128,12 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
     
     const close = async () => {
       console.error('[session] Detaching from Chrome (tab stays open)');
-      await browser.disconnect().catch(() => {});
+      await Promise.race([
+        browser.disconnect(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('disconnect timeout')), 5000)
+        )
+      ]).catch(() => {});
     };
     
     console.error('[session] Connected to Chrome, created new tab');
@@ -150,7 +160,12 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
   
   const close = async () => {
     console.error('[session] Closing browser');
-    await browser.close().catch(() => {});
+    await Promise.race([
+      browser.close(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('close timeout')), 5000)
+      )
+    ]).catch(() => {});
   };
   
   console.error('[session] Browser launched');

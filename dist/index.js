@@ -211,6 +211,7 @@ program
     .option('--tab <id>', 'Target specific tab')
     .option('--all', 'Return full DOM tree (default: interactive elements only)')
     .option('--depth <number>', 'Max DOM depth for --all mode', '5')
+    .option('--aria', 'Include ARIA attributes in output', false)
     .option('--timeout <ms>', 'Operation timeout', undefined)
     .action(async (selector, options) => {
     const opts = program.opts();
@@ -225,11 +226,12 @@ program
             tabId: options.tab,
         }), timeout, 'Session creation');
         try {
-            await (0, inspect_1.inspect)(session.page, selector, { ...options, timeout });
+            await (0, inspect_1.inspect)(session.page, selector, { ...options, aria: options.aria, timeout });
         }
         finally {
             await session.close();
         }
+        process.exit(0);
     }
     catch (error) {
         console.error(`[inspect] Failed: ${error.message}`);
@@ -279,6 +281,8 @@ program
     .option('--url <url>', 'Navigate first')
     .option('--tab <id>', 'Target specific tab')
     .option('--tag <tag>', 'Filter by tag name (e.g., button, a)')
+    .option('--role <role>', 'Filter by ARIA role (e.g., button, link, checkbox)')
+    .option('--aria-label <text>', 'Filter by aria-label attribute')
     .option('--exact', 'Exact text match', false)
     .option('--timeout <ms>', 'Operation timeout', undefined)
     .action(async (text, options) => {
@@ -294,11 +298,12 @@ program
             tabId: options.tab,
         }), timeout, 'Session creation');
         try {
-            await (0, find_1.find)(session.page, text, { ...options, timeout });
+            await (0, find_1.find)(session.page, text, { ...options, role: options.role, ariaLabel: options.ariaLabel, timeout });
         }
         finally {
             await session.close();
         }
+        process.exit(0);
     }
     catch (error) {
         console.error(`[find] Failed: ${error.message}`);

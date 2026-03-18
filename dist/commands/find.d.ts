@@ -11,6 +11,8 @@ export interface FindOptions {
     url?: string;
     tag?: string;
     exact?: boolean;
+    role?: string;
+    ariaLabel?: string;
     timeout?: number;
 }
 export interface FoundElement {
