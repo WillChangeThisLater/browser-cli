@@ -28,7 +28,14 @@ const program = new Command();
 program
   .name('browser')
   .description('Agent-optimized browser automation CLI')
-  .version('0.1.0');
+  .version('0.1.0')
+  .exitOverride((err) => {
+    // Allow process.exit() to work properly in async action handlers
+    if (err?.code === 'commander.executeSubCommandAsync') {
+      process.exit(1);
+    }
+    // Otherwise, let Commander handle it normally
+  });
 
 // Global options
 program
@@ -66,7 +73,10 @@ Output:
     try {
       await go(session.page, url, options);
     } finally {
+      console.error('[go] closing session');
       await session.close();
+      console.error('[go] closed session');
+      console.error('[go] exiting');
       process.exit(0);
     }
   });

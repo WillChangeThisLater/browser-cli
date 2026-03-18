@@ -8,6 +8,7 @@
  */
 
 import { Page } from 'puppeteer-core';
+import { withTimeout } from '../utils/timeout';
 
 export interface FindOptions {
   url?: string;
@@ -145,11 +146,7 @@ export async function find(page: Page, text: string, options: FindOptions = {}):
       return { tabId, pageUrl, title, elements };
     })();
     
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout)
-    );
-    
-    const result = await Promise.race([operationPromise, timeoutPromise]);
+    const result = await withTimeout(operationPromise, timeout, 'Find operation');
     
     const elapsed = Date.now() - startTime;
     console.error(`[find] Found ${result.elements.length} element${result.elements.length !== 1 ? 's' : ''} in ${elapsed}ms`);

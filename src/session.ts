@@ -6,6 +6,7 @@
  */
 
 import puppeteer, { Browser, Page } from 'puppeteer-core';
+import { withTimeout } from './utils/timeout';
 
 export interface SessionOptions {
   headless?: boolean;
@@ -64,12 +65,9 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
     });
     
     // Get all pages and find the one with matching tab ID
-    // Use Promise.race to avoid hanging on browser.pages()
+    // Use withTimeout to avoid hanging on browser.pages()
     const pagesPromise = browser.pages();
-    const timeoutPromise = new Promise<Page[]>((_, reject) =>
-      setTimeout(() => reject(new Error(`browser.pages() timeout after ${timeout}ms`)), timeout)
-    );
-    const pages = await Promise.race([pagesPromise, timeoutPromise]);
+    const pages = await withTimeout(pagesPromise, timeout, 'browser.pages()');
     
     // Find page by matching target ID
     let foundPage: Page | undefined;

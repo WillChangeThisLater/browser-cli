@@ -3,6 +3,7 @@
  */
 
 import { Page } from 'puppeteer-core';
+import { withTimeout } from '../utils/timeout';
 
 export interface GoOptions {
   waitLoadState?: 'domcontentloaded' | 'networkidle0' | 'networkidle2' | 'load';
@@ -43,11 +44,7 @@ export async function go(page: Page, url: string, options: GoOptions = {}): Prom
       return { tabId, title, finalUrl };
     })();
     
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout)
-    );
-    
-    const result = await Promise.race([operationPromise, timeoutPromise]);
+    const result = await withTimeout(operationPromise, timeout, 'Navigation');
     
     const elapsed = Date.now() - startTime;
     console.error(`[go] Navigation completed in ${elapsed}ms`);

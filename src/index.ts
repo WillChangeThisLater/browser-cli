@@ -8,6 +8,7 @@
 
 import { Command } from 'commander';
 import { createSession, Session } from './session';
+import { withTimeout } from './utils/timeout';
 import { go } from './commands/go';
 import { click } from './commands/click';
 import { type } from './commands/type';
@@ -33,13 +34,6 @@ program
   .option('--port <number>', 'Connect to Chrome on port')
   .option('--ws <url>', 'Connect via WebSocket URL')
   .option('--timeout <ms>', 'Operation timeout in milliseconds', process.env.BROWSER_TIMEOUT || '120000');
-
-function withTimeout<T>(promise: Promise<T>, timeout: number, operation: string): Promise<T> {
-  const timeoutPromise = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error(`${operation} timeout after ${timeout}ms`)), timeout)
-  );
-  return Promise.race([promise, timeoutPromise]);
-}
 
 // go command
 program

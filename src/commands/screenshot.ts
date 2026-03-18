@@ -3,6 +3,7 @@
  */
 
 import { Page } from 'puppeteer-core';
+import { withTimeout } from '../utils/timeout';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -67,11 +68,7 @@ export async function screenshot(page: Page, outputPath: string, options: Screen
       return { tabId, pageUrl, title, size: stats.size, sizeKB, fullPage, type };
     })();
     
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout)
-    );
-    
-    const result = await Promise.race([operationPromise, timeoutPromise]);
+    const result = await withTimeout(operationPromise, timeout, 'Screenshot operation');
     
     const elapsed = Date.now() - startTime;
     const captureElapsed = Date.now() - operationStartTime;

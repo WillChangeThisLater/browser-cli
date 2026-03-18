@@ -57,7 +57,9 @@ program
             await (0, go_1.go)(session.page, url, { ...options, timeout });
         }
         finally {
+            console.error(`[go] closing session`);
             await session.close();
+            console.error(`[go] closed session`);
         }
     }
     catch (error) {
@@ -65,6 +67,7 @@ program
         console.log(JSON.stringify({ success: false, error: error.message }));
         process.exit(2);
     }
+    console.error(`[go] got here`);
 });
 // click command
 program

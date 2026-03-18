@@ -3,6 +3,7 @@
  */
 
 import { Page } from 'puppeteer-core';
+import { withTimeout } from '../utils/timeout';
 
 export interface ScrollOptions {
   url?: string;
@@ -109,11 +110,7 @@ export async function scroll(page: Page, options: ScrollOptions = {}): Promise<v
       return { tabId, pageUrl, title, scrollResult };
     })();
     
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout)
-    );
-    
-    const result = await Promise.race([operationPromise, timeoutPromise]);
+    const result = await withTimeout(operationPromise, timeout, 'Scroll operation');
     
     const elapsed = Date.now() - startTime;
     console.error(`[scroll] Completed in ${elapsed}ms`);

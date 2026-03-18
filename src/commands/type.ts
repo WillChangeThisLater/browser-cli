@@ -3,6 +3,7 @@
  */
 
 import { Page } from 'puppeteer-core';
+import { withTimeout } from '../utils/timeout';
 
 export interface TypeOptions {
   url?: string;
@@ -85,11 +86,7 @@ export async function type(page: Page, selector: string, text: string, options: 
       return { tabId, pageUrl, title, inputValue };
     })();
     
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout)
-    );
-    
-    const result = await Promise.race([operationPromise, timeoutPromise]);
+    const result = await withTimeout(operationPromise, timeout, 'Type operation');
     
     const elapsed = Date.now() - startTime;
     console.error(`[type] Text entered successfully (${elapsed}ms)`);

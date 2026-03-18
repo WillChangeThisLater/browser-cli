@@ -3,6 +3,7 @@
  */
 
 import { Page } from 'puppeteer-core';
+import { withTimeout } from '../utils/timeout';
 
 export interface EvalOptions {
   url?: string;
@@ -43,11 +44,7 @@ export async function evalJs(page: Page, code: string, options: EvalOptions = {}
       return { tabId, pageUrl, title, result };
     })();
     
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout)
-    );
-    
-    const result = await Promise.race([operationPromise, timeoutPromise]);
+    const result = await withTimeout(operationPromise, timeout, 'JavaScript execution');
     
     const elapsed = Date.now() - startTime;
     if (!options.silent) {
