@@ -44,6 +44,18 @@ Tests that catch common bug patterns:
 
 - **Timeout Cleanup**: Verifies timers are cleaned up on all code paths
 
+### Edge Case Tests (`edge-cases.test.ts`)
+
+Tests for command input validation and option handling:
+
+- **Type command**: Empty text, special characters, clear/enter options, URL handling
+- **Click command**: Wait option, CSS selector patterns
+- **Scroll command**: Direction handling, option precedence, boundary conditions
+- **Find command**: Search text patterns, filter options, result limiting
+- **Eval command**: Return value types, JSON/silent options, code length handling
+
+These tests verify that options are handled correctly and edge cases don't cause crashes.
+
 ## Bugs These Tests Prevent
 
 ### Bug #1: Process Hang (120s delay)
