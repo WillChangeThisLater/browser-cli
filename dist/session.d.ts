@@ -9,6 +9,7 @@ export interface SessionOptions {
     headless?: boolean;
     slowMo?: number;
     port?: number;
+    host?: string;
     ws?: string;
     tabId?: string;
     timeout?: number;

@@ -59,9 +59,9 @@ export async function type(page: Page, selector: string, text: string, options: 
           if (form) {
             form.submit();
           } else {
-            input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-            input.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
-            input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
+            input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+            input.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true, cancelable: true }));
+            input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true, cancelable: true }));
           }
         }, selector);
         await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: timeout }).catch(() => {});

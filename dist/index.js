@@ -8,6 +8,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = require("commander");
 const session_1 = require("./session");
+const timeout_1 = require("./utils/timeout");
 const go_1 = require("./commands/go");
 const click_1 = require("./commands/click");
 const type_1 = require("./commands/type");
@@ -28,12 +29,9 @@ program
     .option('--headless', 'Run in headless mode', false)
     .option('--slow-mo <ms>', 'Slow down actions', '0')
     .option('--port <number>', 'Connect to Chrome on port')
+    .option('--host <host>', 'Connect to Chrome on remote host (defaults to localhost)', 'localhost')
     .option('--ws <url>', 'Connect via WebSocket URL')
-    .option('--timeout <ms>', 'Operation timeout in milliseconds', process.env.BROWSER_TIMEOUT || '120000');
-function withTimeout(promise, timeout, operation) {
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`${operation} timeout after ${timeout}ms`)), timeout));
-    return Promise.race([promise, timeoutPromise]);
-}
+    .option('--timeout <ms>', 'Operation timeout in milliseconds', process.env.BROWSER_TIMEOUT || '30000');
 // go command
 program
     .command('go <url>')
@@ -44,9 +42,9 @@ program
     .action(async (url, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -57,9 +55,7 @@ program
             await (0, go_1.go)(session.page, url, { ...options, timeout });
         }
         finally {
-            console.error(`[go] closing session`);
             await session.close();
-            console.error(`[go] closed session`);
         }
     }
     catch (error) {
@@ -67,7 +63,6 @@ program
         console.log(JSON.stringify({ success: false, error: error.message }));
         process.exit(2);
     }
-    console.error(`[go] got here`);
 });
 // click command
 program
@@ -80,9 +75,9 @@ program
     .action(async (selector, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -115,9 +110,9 @@ program
     .action(async (selector, text, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -150,9 +145,9 @@ program
     .action(async (path, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -184,9 +179,9 @@ program
     .action(async (code, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -219,9 +214,9 @@ program
     .action(async (selector, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -255,9 +250,9 @@ program
     .action(async (direction, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -291,9 +286,9 @@ program
     .action(async (text, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -326,9 +321,9 @@ program
     .action(async (selector, options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
-    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '120000');
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     try {
-        const session = await withTimeout((0, session_1.createSession)({
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
             headless: opts.headless,
             slowMo: parseInt(opts.slowMo),
             port: port || undefined,
@@ -354,6 +349,68 @@ program
         process.exit(2);
     }
 });
+// back command
+program
+    .command('back')
+    .description('Go back in browser history')
+    .option('--tab <id>', 'Target specific tab')
+    .option('--timeout <ms>', 'Operation timeout', undefined)
+    .action(async (options) => {
+    const opts = program.opts();
+    const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
+    try {
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
+            headless: opts.headless,
+            slowMo: parseInt(opts.slowMo),
+            port: port || undefined,
+            ws: opts.ws,
+            tabId: options.tab,
+        }), timeout, 'Session creation');
+        try {
+            await session.page.goBack({ timeout });
+        }
+        finally {
+            await session.close();
+        }
+    }
+    catch (error) {
+        console.error(`[back] Failed: ${error.message}`);
+        console.log(JSON.stringify({ success: false, error: error.message }));
+        process.exit(2);
+    }
+});
+// forward command
+program
+    .command('forward')
+    .description('Go forward in browser history')
+    .option('--tab <id>', 'Target specific tab')
+    .option('--timeout <ms>', 'Operation timeout', undefined)
+    .action(async (options) => {
+    const opts = program.opts();
+    const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
+    try {
+        const session = await (0, timeout_1.withTimeout)((0, session_1.createSession)({
+            headless: opts.headless,
+            slowMo: parseInt(opts.slowMo),
+            port: port || undefined,
+            ws: opts.ws,
+            tabId: options.tab,
+        }), timeout, 'Session creation');
+        try {
+            await session.page.goForward({ timeout });
+        }
+        finally {
+            await session.close();
+        }
+    }
+    catch (error) {
+        console.error(`[forward] Failed: ${error.message}`);
+        console.log(JSON.stringify({ success: false, error: error.message }));
+        process.exit(2);
+    }
+});
 // tabs command
 program
     .command('tabs')
@@ -369,6 +426,7 @@ Output:
     .action(async () => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '0');
+    const host = opts.host || 'localhost';
     if (!port) {
         console.log(JSON.stringify({
             success: false,
@@ -377,7 +435,7 @@ Output:
         process.exit(1);
     }
     try {
-        const response = await fetch(`http://localhost:${port}/json`);
+        const response = await fetch(`http://${host}:${port}/json`);
         const tabs = await response.json();
         const result = tabs
             .filter(t => t.type === 'page')
@@ -416,6 +474,7 @@ Output:
     .action(async (options) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '0');
+    const host = opts.host || 'localhost';
     if (!port) {
         console.log(JSON.stringify({
             success: false,
@@ -424,7 +483,7 @@ Output:
         process.exit(1);
     }
     try {
-        await fetch(`http://localhost:${port}/json/close/${options.tab}`);
+        await fetch(`http://${host}:${port}/json/close/${options.tab}`);
         console.log(JSON.stringify({
             success: true,
             tabId: options.tab,

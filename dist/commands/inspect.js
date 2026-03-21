@@ -4,6 +4,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inspect = inspect;
+const timeout_1 = require("../utils/timeout");
 async function inspect(page, selector, options = {}) {
     const url = options.url;
     const all = options.all ?? false;
@@ -263,10 +264,10 @@ async function inspect(page, selector, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title, elements };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Inspect operation');
         const elapsed = Date.now() - startTime;
         console.error(`[inspect] Completed in ${elapsed}ms`);
         console.log(JSON.stringify({

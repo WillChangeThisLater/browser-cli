@@ -9,6 +9,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.waitFor = waitFor;
+const timeout_1 = require("../utils/timeout");
 async function waitFor(page, selector, options = {}) {
     const url = options.url;
     const visible = options.visible ?? true;
@@ -37,10 +38,10 @@ async function waitFor(page, selector, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Operation timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Wait-for operation');
         const elapsed = Date.now() - startTime;
         console.error(`[wait-for] Element found in ${elapsed}ms`);
         console.log(JSON.stringify({

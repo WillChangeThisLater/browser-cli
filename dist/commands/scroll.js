@@ -4,6 +4,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scroll = scroll;
+const timeout_1 = require("../utils/timeout");
 async function scroll(page, options = {}) {
     const url = options.url;
     const direction = options.direction;
@@ -89,10 +90,10 @@ async function scroll(page, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title, scrollResult };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Scroll operation');
         const elapsed = Date.now() - startTime;
         console.error(`[scroll] Completed in ${elapsed}ms`);
         console.log(JSON.stringify({

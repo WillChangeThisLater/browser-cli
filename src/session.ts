@@ -12,6 +12,7 @@ export interface SessionOptions {
   headless?: boolean;
   slowMo?: number;
   port?: number;
+  host?: string;
   ws?: string;
   tabId?: string;
   timeout?: number;
@@ -48,10 +49,11 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
 
   // Case 1: Attach to specific existing tab
   if (tabId && port) {
+    const host = options.host || 'localhost';
     console.error(`[${startTs}] [session] Attaching to existing tab: ${tabId}`);
     
     // First verify tab exists
-    const tabsResponse = await fetch(`http://localhost:${port}/json`);
+    const tabsResponse = await fetch(`http://${host}:${port}/json`);
     const tabs = await tabsResponse.json() as any[];
     const tabInfo = tabs.find(t => t.id === tabId);
     
@@ -60,8 +62,9 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
     }
     
     // Connect to the browser
+    const browserURL = `http://${options.host || 'localhost'}:${port}`;
     browser = await puppeteer.connect({
-      browserURL: `http://localhost:${port}`,
+      browserURL,
     });
     
     // Get all pages and find the one with matching tab ID
@@ -105,7 +108,8 @@ export async function createSession(options: SessionOptions = {}): Promise<Sessi
 
   // Case 2: Connect to existing Chrome (will create new tab)
   if (ws || port) {
-    const connectUrl = ws || `http://localhost:${port}`;
+    const host = options.host || 'localhost';
+    const connectUrl = ws || `http://${host}:${port}`;
     console.error(`[${startTs}] [session] Connecting to Chrome: ${connectUrl}`);
     
     browser = await puppeteer.connect({

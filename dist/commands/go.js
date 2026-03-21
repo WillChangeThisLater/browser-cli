@@ -4,6 +4,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.go = go;
+const timeout_1 = require("../utils/timeout");
 async function go(page, url, options = {}) {
     const waitLoadState = options.waitLoadState || 'domcontentloaded';
     const timeout = options.timeout || 120000;
@@ -29,10 +30,10 @@ async function go(page, url, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, title, finalUrl };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Navigation');
         const elapsed = Date.now() - startTime;
         console.error(`[go] Navigation completed in ${elapsed}ms`);
         console.log(JSON.stringify({

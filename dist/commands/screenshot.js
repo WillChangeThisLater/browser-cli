@@ -37,6 +37,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.screenshot = screenshot;
+const timeout_1 = require("../utils/timeout");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 async function screenshot(page, outputPath, options = {}) {
@@ -79,10 +80,10 @@ async function screenshot(page, outputPath, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title, size: stats.size, sizeKB, fullPage, type };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Screenshot operation');
         const elapsed = Date.now() - startTime;
         const captureElapsed = Date.now() - operationStartTime;
         console.error(`[screenshot] Completed in ${elapsed}ms (capture: ${captureElapsed}ms)`);

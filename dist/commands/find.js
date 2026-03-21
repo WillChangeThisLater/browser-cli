@@ -9,6 +9,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.find = find;
+const timeout_1 = require("../utils/timeout");
 async function find(page, text, options = {}) {
     const url = options.url;
     const tag = options.tag;
@@ -105,10 +106,10 @@ async function find(page, text, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title, elements };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Find operation');
         const elapsed = Date.now() - startTime;
         console.error(`[find] Found ${result.elements.length} element${result.elements.length !== 1 ? 's' : ''} in ${elapsed}ms`);
         console.log(JSON.stringify({

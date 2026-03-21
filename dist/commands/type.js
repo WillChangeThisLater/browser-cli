@@ -4,6 +4,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.type = type;
+const timeout_1 = require("../utils/timeout");
 async function type(page, selector, text, options = {}) {
     const url = options.url;
     const clear = options.clear ?? false;
@@ -47,9 +48,9 @@ async function type(page, selector, text, options = {}) {
                         form.submit();
                     }
                     else {
-                        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-                        input.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
-                        input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
+                        input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+                        input.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true, cancelable: true }));
+                        input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true, cancelable: true }));
                     }
                 }, selector);
                 await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: timeout }).catch(() => { });
@@ -67,10 +68,10 @@ async function type(page, selector, text, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title, inputValue };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Type operation');
         const elapsed = Date.now() - startTime;
         console.error(`[type] Text entered successfully (${elapsed}ms)`);
         console.log(JSON.stringify({

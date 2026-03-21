@@ -4,6 +4,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.evalJs = evalJs;
+const timeout_1 = require("../utils/timeout");
 async function evalJs(page, code, options = {}) {
     const url = options.url;
     const json = options.json ?? false;
@@ -27,10 +28,10 @@ async function evalJs(page, code, options = {}) {
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
+            await client.detach();
             return { tabId, pageUrl, title, result };
         })();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${timeout}ms`)), timeout));
-        const result = await Promise.race([operationPromise, timeoutPromise]);
+        const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'JavaScript execution');
         const elapsed = Date.now() - startTime;
         if (!options.silent) {
             console.error(`[eval] Completed in ${elapsed}ms`);

@@ -11,6 +11,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createSession = createSession;
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
+const timeout_1 = require("./utils/timeout");
 /**
  * Create a new browser session
  */
@@ -30,23 +31,24 @@ async function createSession(options = {}) {
     let actualTabId;
     // Case 1: Attach to specific existing tab
     if (tabId && port) {
+        const host = options.host || 'localhost';
         console.error(`[${startTs}] [session] Attaching to existing tab: ${tabId}`);
         // First verify tab exists
-        const tabsResponse = await fetch(`http://localhost:${port}/json`);
+        const tabsResponse = await fetch(`http://${host}:${port}/json`);
         const tabs = await tabsResponse.json();
         const tabInfo = tabs.find(t => t.id === tabId);
         if (!tabInfo) {
             throw new Error(`Tab ${tabId} not found. Run 'browser tabs --port ${port}' to list tabs.`);
         }
         // Connect to the browser
+        const browserURL = `http://${options.host || 'localhost'}:${port}`;
         browser = await puppeteer_core_1.default.connect({
-            browserURL: `http://localhost:${port}`,
+            browserURL,
         });
         // Get all pages and find the one with matching tab ID
-        // Use Promise.race to avoid hanging on browser.pages()
+        // Use withTimeout to avoid hanging on browser.pages()
         const pagesPromise = browser.pages();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error(`browser.pages() timeout after ${timeout}ms`)), timeout));
-        const pages = await Promise.race([pagesPromise, timeoutPromise]);
+        const pages = await (0, timeout_1.withTimeout)(pagesPromise, timeout, 'browser.pages()');
         // Find page by matching target ID
         let foundPage;
         for (const p of pages) {
@@ -78,7 +80,8 @@ async function createSession(options = {}) {
     }
     // Case 2: Connect to existing Chrome (will create new tab)
     if (ws || port) {
-        const connectUrl = ws || `http://localhost:${port}`;
+        const host = options.host || 'localhost';
+        const connectUrl = ws || `http://${host}:${port}`;
         console.error(`[${startTs}] [session] Connecting to Chrome: ${connectUrl}`);
         browser = await puppeteer_core_1.default.connect({
             browserURL: ws ? undefined : connectUrl,
