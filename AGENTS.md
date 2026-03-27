@@ -55,6 +55,37 @@ browser click button --tab abc123
 
 **Why specify `--tab`:** Keeps all related operations in one tab instead of spawning new ones.
 
+### Positional Tab IDs
+
+Tabs can be referenced by **UUID** (stable) or **positional ID** (ephemeral convenience):
+
+**From `browser tabs` output:**
+```json
+{"tabs":[
+  {"id":"uuid-123","position":"tab_0","title":"Page 1"},
+  {"id":"uuid-456","position":"tab_1","title":"Page 2"}
+]}
+```
+
+**Usage:**
+- **Positional IDs** (`tab_0`, `tab_1`): Convenient but shift when tabs are added/removed
+- **UUIDs** (`1A2E74F084E163530844BC5F3340A4B2`): Stable across sessions
+
+**Best practice:** Use positional IDs for quick scripts, UUIDs for long-running workflows.
+
+```bash
+# Quick reference (ephemeral)
+browser go https://news.ycombinator.com --tab tab_1
+
+# Long-running workflow (stable)
+browser go https://news.ycombinator.com --tab 1A2E74F084E163530844BC5F3340A4B2
+```
+
+**Error handling:** If positional ID is out of range, you'll get:
+```
+Positional ID "tab_999" is out of range (0-1)
+```
+
 Check existing tabs first: `browser tabs --port 9222`
 
 ---

@@ -8,6 +8,31 @@ A lightweight CLI for browser automation via Chrome DevTools Protocol (CDP). The
 **Language:** TypeScript
 **Browser:** Chrome/Chromium (primary), Firefox (optional)
 
+## Features
+
+### Positional Tab IDs
+
+Tabs can be referenced by both UUID (stable across sessions) and positional IDs (ephemeral, for convenience):
+
+- **UUID format**: `9B7D037E0605DAE6A13BFCC1297D33F3` - Stable, unique identifier
+- **Positional format**: `tab_0`, `tab_1`, `tab_2`, etc. - Position-based, changes when tabs are added/removed
+
+**Usage examples:**
+```bash
+# View tabs with both IDs
+browser tabs --port 9222
+
+# Navigate using positional ID
+browser go https://news.ycombinator.com --tab tab_1
+
+# Navigate using UUID (more stable)
+browser go https://news.ycombinator.com --tab 9B7D037E0605DAE6A13BFCC1297D33F3
+```
+
+**Important:** Positional IDs are ephemeral. When a tab is added or removed, the positions shift. Use UUIDs for long-lived workflows.
+
+---
+
 ---
 
 ## CLI Interface
