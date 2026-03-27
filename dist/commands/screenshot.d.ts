@@ -8,6 +8,11 @@ export interface ScreenshotOptions {
     type?: 'png' | 'jpeg';
     quality?: number;
     timeout?: number;
+    element?: string;
+    offset?: number;
+    noScroll?: boolean;
+    visible?: boolean;
+    wait?: number;
 }
 export declare function screenshot(page: Page, outputPath: string, options?: ScreenshotOptions): Promise<void>;
 //# sourceMappingURL=screenshot.d.ts.map

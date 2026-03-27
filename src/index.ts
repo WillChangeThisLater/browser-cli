@@ -145,9 +145,14 @@ program
   .description('Capture screenshot (optionally navigate first with --url, or use --tab for existing tab)')
   .option('--url <url>', 'Navigate first')
   .option('--tab <id>', 'Target specific tab')
+  .option('--element <selector>', 'Capture specific element by CSS selector')
+  .option('--offset <px>', 'Padding around element in pixels', '0')
   .option('--full-page', 'Full page', false)
   .option('--type <type>', 'Image type', 'png')
   .option('--quality <number>', 'JPEG quality', '80')
+  .option('--no-scroll', 'Do not scroll element into view (implied when --element is used)', false)
+  .option('--visible', 'Only capture if element is visible', true)
+  .option('--wait <ms>', 'Wait after scroll before capture', '0')
   .option('--timeout <ms>', 'Operation timeout', undefined)
   .action(async (path: string, options: any) => {
     const opts = program.opts();

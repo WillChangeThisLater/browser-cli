@@ -43,10 +43,21 @@ const path = __importStar(require("path"));
 async function screenshot(page, outputPath, options = {}) {
     const url = options.url;
     const fullPage = options.fullPage ?? false;
+    const element = options.element;
+    const offset = options.offset || 0;
+    const noScroll = options.noScroll ?? false;
+    const scroll = !noScroll && element !== undefined; // Scroll is implied when --element is used
+    const visible = options.visible ?? true;
+    const wait = options.wait || 0;
     const type = options.type || 'png';
     const quality = options.quality ? parseInt(options.quality.toString()) : 80;
     const timeout = options.timeout || 120000;
     const startTime = Date.now();
+    const operationStartTime = Date.now();
+    // Validate: element and fullPage are mutually exclusive
+    if (element && fullPage) {
+        throw new Error('Cannot use --element with --full-page');
+    }
     // Navigate if URL provided
     if (url) {
         console.error(`[screenshot] Navigating to ${url} first (timeout: ${timeout}ms)`);
@@ -56,9 +67,10 @@ async function screenshot(page, outputPath, options = {}) {
         }
         await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: timeout });
     }
-    const operationStartTime = Date.now();
-    console.error(`[screenshot] Capturing screenshot to ${outputPath}`);
-    console.error(`[screenshot] Full page: ${fullPage}, Type: ${type}`);
+    // Describe what we're capturing
+    const elementSelector = element ? `element: ${element} (scroll: ${scroll})` : fullPage ? 'fullPage' : 'viewport';
+    console.error(`[screenshot] Capturing screenshot to ${outputPath} (${elementSelector})`);
+    console.error(`[screenshot] Type: ${type}, Quality: ${quality}, Offset: ${offset}`);
     try {
         const outputDir = path.dirname(outputPath);
         if (outputDir && outputDir !== '.' && !fs.existsSync(outputDir)) {
@@ -66,11 +78,64 @@ async function screenshot(page, outputPath, options = {}) {
             console.error(`[screenshot] Created directory: ${outputDir}`);
         }
         const operationPromise = (async () => {
-            const imageBuffer = await page.screenshot({
+            let screenshotOptions = {
                 type,
                 fullPage,
                 quality: type === 'jpeg' ? quality : undefined,
-            });
+            };
+            // Add element selector if provided
+            if (element) {
+                // Scroll into view if not opted-out
+                if (scroll) {
+                    console.error(`[screenshot] Scrolling element into view...`);
+                    await page.evaluate((sel) => {
+                        const el = document.querySelector(sel);
+                        if (el)
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, element);
+                    await new Promise(resolve => setTimeout(resolve, wait || 500));
+                }
+                // Check visibility if requested
+                if (visible) {
+                    const isVisible = await page.$(element) !== null;
+                    if (!isVisible) {
+                        console.error(`[screenshot] Warning: Element "${element}" not found`);
+                    }
+                }
+                // Get element's bounding box and position
+                const bboxResult = await page.evaluate((selector) => {
+                    const el = document.querySelector(selector);
+                    const rect = el?.getBoundingClientRect();
+                    if (!rect)
+                        return null;
+                    return {
+                        x: rect.left,
+                        y: rect.top,
+                        width: rect.width,
+                        height: rect.height,
+                    };
+                }, element);
+                if (!bboxResult) {
+                    throw new Error(`Could not get bounding box for element "${element}"`);
+                }
+                const { x, y, width, height } = bboxResult;
+                // Calculate screenshot area with offset
+                const offset = options.offset || 0;
+                const screenshotArea = {
+                    x: Math.max(0, x - offset),
+                    y: Math.max(0, y - offset),
+                    width: width + (offset * 2),
+                    height: height + (offset * 2),
+                };
+                // Use viewport screenshot with clip for element capture
+                screenshotOptions.clip = screenshotArea;
+                console.error(`[screenshot] Capturing element "${element}" with offset ${offset}px`);
+            }
+            else if (!fullPage) {
+                // Default viewport screenshot
+                console.error(`[screenshot] Capturing viewport`);
+            }
+            const imageBuffer = await page.screenshot(screenshotOptions);
             fs.writeFileSync(outputPath, imageBuffer);
             const stats = fs.statSync(outputPath);
             const sizeKB = (stats.size / 1024).toFixed(2);
@@ -81,7 +146,7 @@ async function screenshot(page, outputPath, options = {}) {
             const { targetInfo } = await client.send('Target.getTargetInfo');
             const tabId = targetInfo.targetId;
             await client.detach();
-            return { tabId, pageUrl, title, size: stats.size, sizeKB, fullPage, type };
+            return { tabId, pageUrl, title, size: stats.size, sizeKB, fullPage, type, element };
         })();
         const result = await (0, timeout_1.withTimeout)(operationPromise, timeout, 'Screenshot operation');
         const elapsed = Date.now() - startTime;
@@ -95,6 +160,7 @@ async function screenshot(page, outputPath, options = {}) {
             sizeKB: result.sizeKB,
             fullPage: result.fullPage,
             type: result.type,
+            element: result.element,
             url: result.pageUrl,
             title: result.title,
         }));

@@ -6,32 +6,20 @@ A lightweight CLI for browser automation via Puppeteer. Connects to an existing 
 
 ## Installation
 
+### Recommended (Simple)
+
 ```bash
-# Build the project
 cd /home/paul/repos/browser-cli
 npm run build
+npm link
+```
 
-# Copy to global location
-cp -r dist /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/browser-cli
-cp -r node_modules /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/browser-cli
+Then run from anywhere: `browser go https://example.com`
 
-# Create package.json with bin entry
-cat > /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/browser-cli/package.json << 'EOF'
-{
-  "name": "browser-cli",
-  "version": "0.1.0",
-  "bin": {
-    "browser": "./dist/index.js"
-  }
-}
-EOF
+### Alternative: Use npx (No install needed)
 
-# Create bin symlink
-mkdir -p /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/.bin
-ln -sf /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/browser-cli/dist/index.js /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/.bin/browser
-
-# Make executable
-chmod +x /home/paul/.nvm/versions/node/$(node -v | cut -d. -f1,2,3)/lib/node_modules/browser-cli/dist/index.js
+```bash
+npx browser go https://example.com
 ```
 
 Or simply run from the repo:
@@ -95,9 +83,43 @@ browser go https://duckduckgo.com --tab <tab-id>
 # Search for a query
 browser go https://duckduckgo.com/?q=your+search+query
 
-# Take a screenshot
+# Take a screenshot (viewport)
 browser screenshot output.png --tab <tab-id>
+
+# Take an element screenshot (auto-scrolls to element)
+browser screenshot element.png --element "#my-button" --tab <tab-id>
+
+# Element screenshot with padding and scroll wait
+browser screenshot element.png --element ".card" --offset 20 --wait 500 --tab <tab-id>
 ```
+
+## Element Screenshots
+
+Capture specific DOM elements by CSS selector. **Scrolling is implied** (use `--no-scroll` to opt-out):
+
+```bash
+# Basic element screenshot (scrolls automatically)
+browser screenshot /tmp/button.png --element "#my-button"
+
+# With padding
+browser screenshot /tmp/button.png --element "#my-button" --offset 20
+
+# Scroll into view and wait
+browser screenshot /tmp/item.png --element ".item-50" --scroll --wait 500
+
+# Don't scroll (opt-out)
+browser screenshot /tmp/check.png --element ".sidebar" --no-scroll
+
+# Verify element is visible
+browser screenshot /tmp/error.png --element ".error" --visible
+```
+
+**Options:**
+- `--element <selector>` - CSS selector of element to capture
+- `--offset <px>` - Padding around element (default: 0)
+- `--no-scroll` - Don't scroll element into view (default: scroll when --element is used)
+- `--visible` - Only capture if element is visible (default: true)
+- `--wait <ms>` - Wait after scroll before capture (default: 500ms when scrolling)
 
 ## Documentation
 

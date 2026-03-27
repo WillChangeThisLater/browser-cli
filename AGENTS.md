@@ -85,6 +85,7 @@ Check existing tabs first: `browser tabs --port 9222`
 **Example:**
 - `docs/controls/duckduckgo.com/controls.md`
 - `docs/controls/github.com/controls.md`
+- `docs/controls/mitmweb.localhost/controls.md`
 - `docs/controls/npmjs.com/controls.md`
 
 ### Documentation Content
@@ -292,6 +293,42 @@ Run `browser tabs --port 9222` to list available tab IDs.
 
 ---
 
+## Debugging with mitmweb
+
+**File path:** `docs/controls/mitmweb.localhost/controls.md`
+
+### Quick Start
+
+```bash
+# Start mitmproxy (in terminal)
+mitmweb --mode proxy
+
+# Navigate to mitmproxy interface
+browser go http://127.0.0.1:8081 --tab <tab-id>
+
+# Filter requests
+browser eval "(async () => { const search = Array.from(document.querySelectorAll('input')).find(i => i.placeholder === 'Search'); if (search) { search.value = 'duckduckgo'; search.dispatchEvent(new Event('input', { bubbles: true })); } })" --tab <tab-id>
+```
+
+### Use Cases
+
+- **Inspect HTTP requests/responses** in real-time
+- **Filter traffic** by domain or keyword
+- **View request details** (headers, body, timing)
+- **Modify requests** before forwarding (advanced)
+- **Debug API calls** and authentication flows
+
+### Key Patterns
+
+1. **Filter requests:** Use JavaScript to set search value (browser type doesn't work reliably)
+2. **Click request rows** to view details (not links)
+3. **Use tab buttons** to switch between Request/Response/Connection/Timing views
+4. **Menu navigation:** Open File/Start/Options menus first, then click sub-items
+
+See `docs/controls/mitmweb.localhost/controls.md` for full documentation.
+
+---
+
 ## Example Workflow
 
 ```bash
@@ -317,4 +354,5 @@ browser screenshot hackernews.png
 
 - **General patterns:** `docs/controls/README.md`
 - **Site-specific:** `docs/controls/<domain>/controls.md`
+- **Network debugging:** `docs/controls/mitmweb.localhost/controls.md` (available at `http://127.0.0.1:8081`)
 - **Design document:** `DESIGN.md`
