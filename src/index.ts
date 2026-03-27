@@ -21,55 +21,6 @@ import { find } from './commands/find';
 const program = new Command();
 
 import { waitFor } from './commands/wait-for';
-
-/**
- * Resolve a tab ID (UUID or positional ID like "tab_0") to the actual UUID
- */
-async function resolveTabId(port: number, host: string, tabId?: string): Promise<string | undefined> {
-  if (!tabId) {
-    return undefined;
-  }
-
-  // If it looks like a UUID, return as-is
-  if (tabId.match(/^[a-f0-9]{32}$/i)) {
-    return tabId;
-  }
-
-  // Check if it's a positional ID (tab_X format)
-  const positionalMatch = tabId.match(/^tab_(\d+)$/);
-  if (positionalMatch) {
-    // Fetch tabs and find the matching position
-    try {
-      const response = await fetch(`http://${host}:${port}/json`);
-      const tabs = await response.json() as any[];
-      
-      // Filter for page-type tabs
-      const pageTabs = tabs.filter(t => t.type === 'page');
-      
-      // Convert positional ID to actual position
-      const position = parseInt(positionalMatch[1], 10);
-      
-      if (position >= 0 && position < pageTabs.length) {
-        return pageTabs[position].id;
-      } else {
-        throw new Error(`Positional ID "tab_${position}" is out of range (0-${pageTabs.length - 1})`);
-      }
-    } catch (error) {
-      throw new Error(`Failed to resolve tab ID: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  }
-
-  // If it's neither UUID nor positional ID, return as-is (will fail validation later)
-  return tabId;
-}
-
-/**
- * Common action handler for commands that use --tab option
- */
-async function handleTabCommand(options: any, port: number, host: string): Promise<string | undefined> {
-  return await resolveTabId(port, host, options.tab);
-}
-
 program
   .name('browser')
   .description('Agent-optimized browser automation CLI')
@@ -98,13 +49,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -133,13 +83,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -170,13 +119,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -212,13 +160,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -248,13 +195,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -285,13 +231,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -323,13 +268,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -361,13 +305,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -398,13 +341,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -437,13 +379,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -470,13 +411,12 @@ program
     const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, opts.host);
       const session = await withTimeout(createSession({
         headless: opts.headless,
         slowMo: parseInt(opts.slowMo),
         port: port || undefined,
         ws: opts.ws,
-        tabId: resolvedTabId,
+        tabId: options.tab,
       }), timeout, 'Session creation');
       
       try {
@@ -501,13 +441,7 @@ Examples:
   BROWSER_PORT=9222 browser tabs                    # Use env variable
 
 Output:
-  {"success":true,"tabs":[
-    {"id":"uuid-123","position":"tab_0","title":"...","url":"...","type":"page"},
-    {"id":"uuid-456","position":"tab_1","title":"...","url":"...","type":"page"}
-  ]}
-
-Positional IDs are ephemeral and may change when tabs are added/removed.
-Use positional IDs for convenience (tab_0, tab_1, etc.) but UUIDs for stability.
+  {"success":true,"tabs":[{"id":"...","title":"...","url":"...","type":"page"},...]}
 `)
   .action(async () => {
     const opts = program.opts();
@@ -526,15 +460,13 @@ Use positional IDs for convenience (tab_0, tab_1, etc.) but UUIDs for stability.
       const response = await fetch(`http://${host}:${port}/json`);
       const tabs = await response.json() as any[];
       
-      // Filter for page-type tabs and add positional IDs
-      const pageTabs = tabs.filter(t => t.type === 'page');
-      const result = pageTabs
-        .map((tab, index) => ({
+      const result = tabs
+        .filter(t => t.type === 'page')
+        .map(tab => ({
           id: tab.id,
           title: tab.title,
           url: tab.url,
           type: tab.type,
-          position: `tab_${index}`,
         }));
       
       console.log(JSON.stringify({
@@ -577,14 +509,10 @@ Output:
     }
     
     try {
-      const resolvedTabId = await handleTabCommand(options, port, host);
-      if (!resolvedTabId) {
-        throw new Error('Tab ID is required');
-      }
-      await fetch(`http://${host}:${port}/json/close/${resolvedTabId}`);
+      await fetch(`http://${host}:${port}/json/close/${options.tab}`);
       console.log(JSON.stringify({
         success: true,
-        tabId: resolvedTabId,
+        tabId: options.tab,
         action: 'closed',
       }));
     } catch (error) {
