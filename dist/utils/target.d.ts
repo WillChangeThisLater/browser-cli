@@ -12,11 +12,17 @@
  *    We walk up (max 5 ancestors) to find the first visible box.
  */
 import { Page } from 'puppeteer-core';
+export type TargetKind = 'css' | 'text' | 'aria' | 'hastext';
 export interface TargetSpec {
     original: string;
-    kind: 'css' | 'text' | 'aria';
+    kind: TargetKind;
     value: string;
     exact: boolean;
+    /** For kind='hastext': Puppeteer-style `sel:has-text('X')` alternatives (comma-split, in order). */
+    alternatives?: Array<{
+        css: string;
+        text: string;
+    }>;
 }
 export declare function parseTarget(target: string, exact?: boolean): TargetSpec;
 export interface Rect {

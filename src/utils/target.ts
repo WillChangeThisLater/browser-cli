@@ -15,23 +15,54 @@
 import { Page } from 'puppeteer-core';
 import { withTimeout } from './timeout';
 
+export type TargetKind = 'css' | 'text' | 'aria' | 'hastext';
+
 export interface TargetSpec {
   original: string;
-  kind: 'css' | 'text' | 'aria';
+  kind: TargetKind;
   value: string;
   exact: boolean;
+  /** For kind='hastext': Puppeteer-style `sel:has-text('X')` alternatives (comma-split, in order). */
+  alternatives?: Array<{ css: string; text: string }>;
 }
 
 export function parseTarget(target: string, exact = false): TargetSpec {
   if (target.startsWith('text:')) return { original: target, kind: 'text', value: target.slice(5), exact };
   if (target.startsWith('aria:')) return { original: target, kind: 'aria', value: target.slice(5), exact };
   if (target.startsWith('css:')) return { original: target, kind: 'css', value: target.slice(4), exact };
+  // Puppeteer-style :has-text() — possibly comma-separated alternatives.
+  if (target.includes(':has-text(')) {
+    const alternatives: Array<{ css: string; text: string }> = [];
+    for (const part of splitTopLevel(target, ',')) {
+      const m = part.trim().match(/^(.*):has-text\((['"])([\s\S]*)\2\)\s*$/);
+      if (m) alternatives.push({ css: m[1].trim(), text: m[3] });
+    }
+    if (alternatives.length > 0) {
+      return { original: target, kind: 'hastext', value: target, exact, alternatives };
+    }
+  }
   // Heuristic: bare strings with spaces or without selector punctuation are
   // more likely human text than a CSS selector.
   if (!/^[\w#.\[\]:>~*=@^|$()-]+$/.test(target)) {
     return { original: target, kind: 'text', value: target, exact };
   }
   return { original: target, kind: 'css', value: target, exact };
+}
+
+/** Split on a delimiter, ignoring delimiters inside quotes or parentheses. */
+function splitTopLevel(s: string, delim: string): string[] {
+  const parts: string[] = [];
+  let depth = 0, quote: string | null = null, cur = '';
+  for (const ch of s) {
+    if (quote) { cur += ch; if (ch === quote) quote = null; continue; }
+    if (ch === '"' || ch === "'") { quote = ch; cur += ch; continue; }
+    if (ch === '(' || ch === '[') depth++;
+    if (ch === ')' || ch === ']') depth--;
+    if (ch === delim && depth === 0) { parts.push(cur); cur = ''; continue; }
+    cur += ch;
+  }
+  if (cur.trim()) parts.push(cur);
+  return parts;
 }
 
 export interface Rect { x: number; y: number; width: number; height: number; }
@@ -66,11 +97,13 @@ export async function resolveTarget(
   const timeout = options.timeout || 30000;
   const startTime = Date.now();
 
-  // Wait for *something* to exist, then resolve.
+  // Wait for *something* to exist, then resolve. Invalid selectors fail fast
+  // (with a text fallback for Puppeteer-style selectors that aren't valid CSS).
+  let spec2 = spec;
   const raw = await withTimeout((async (): Promise<RawResolution | null> => {
     const deadline = Date.now() + timeout;
     for (;;) {
-      const r: RawResolution | null = await page.evaluate((s: TargetSpec) => {
+      const r: { invalid?: boolean; raw: RawResolution | null } = await page.evaluate((s: TargetSpec) => {
         const isVisible = (el: Element): boolean => {
           const rects = el.getClientRects();
           if (rects.length === 0) return false;
@@ -80,31 +113,52 @@ export async function resolveTarget(
           return rect.width >= 2 && rect.height >= 2;
         };
 
+        const safeQuery = (sel: string): Element[] | null => {
+          try { return Array.from(document.querySelectorAll(sel)); } catch { return null; }
+        };
+        const textMatches = (el: Element): boolean => {
+          if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(el.tagName)) return false;
+          const t = ((el as HTMLElement).innerText || el.textContent || '').trim();
+          if (!t || t.length > 200) return false;
+          const want = s.value.toLowerCase();
+          return s.exact ? t.toLowerCase() === want : t.toLowerCase().includes(want);
+        };
+
         let candidates: Element[] = [];
-        try {
-          if (s.kind === 'css') {
-            candidates = Array.from(document.querySelectorAll(s.value));
-          } else if (s.kind === 'aria') {
-            candidates = Array.from(document.querySelectorAll('[aria-label]')).filter(el =>
-              s.exact
-                ? el.getAttribute('aria-label') === s.value
-                : (el.getAttribute('aria-label') || '').toLowerCase().includes(s.value.toLowerCase())
-            );
-          } else {
-            const want = s.value.toLowerCase();
-            const all = Array.from(document.querySelectorAll('button, a, input, select, label, [role=button], [role=checkbox], [role=tab], summary, li, div, span'));
-            candidates = all.filter(el => {
-              if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(el.tagName)) return false;
+        if (s.kind === 'css') {
+          const found = safeQuery(s.value);
+          if (found === null) return { invalid: true, raw: null };
+          candidates = found;
+        } else if (s.kind === 'aria') {
+          candidates = Array.from(document.querySelectorAll('[aria-label]')).filter(el =>
+            s.exact
+              ? el.getAttribute('aria-label') === s.value
+              : (el.getAttribute('aria-label') || '').toLowerCase().includes(s.value.toLowerCase())
+          );
+        } else if (s.kind === 'hastext') {
+          // Puppeteer-style: `button:has-text('X'), a:has-text('Y')` — try each
+          // alternative; if the css part is invalid, match text on all interactive
+          // elements instead.
+          for (const alt of s.alternatives || []) {
+            const base = safeQuery(alt.css || '*');
+            if (base === null) continue;
+            const want = alt.text.toLowerCase();
+            candidates = base.filter(el => {
               const t = ((el as HTMLElement).innerText || el.textContent || '').trim();
               if (!t || t.length > 200) return false;
               return s.exact ? t.toLowerCase() === want : t.toLowerCase().includes(want);
             });
+            if (candidates.length > 0) break;
           }
-        } catch {
-          return null; // invalid selector
+          if (candidates.length === 0) {
+            candidates = Array.from(document.querySelectorAll('button, a, [role=button]')).filter(textMatches);
+          }
+        } else {
+          const all = Array.from(document.querySelectorAll('button, a, input, select, label, [role=button], [role=checkbox], [role=tab], summary, li, div, span'));
+          candidates = all.filter(textMatches);
         }
 
-        if (candidates.length === 0) return null;
+        if (candidates.length === 0) return { raw: null };
 
         // Prefer visible candidates; among ties prefer smallest (deepest) match.
         const scored = candidates.map(el => {
@@ -122,7 +176,7 @@ export async function resolveTarget(
               const hitRect = node.getBoundingClientRect();
               if (hitRect.width >= 2 && hitRect.height >= 2) {
                 const anyRect = el.getBoundingClientRect();
-                return {
+                return { raw: {
                   matchedTag: el.tagName.toLowerCase(),
                   matchedText: ((el as HTMLElement).innerText || el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 120),
                   matchedVisible: isVisible(el),
@@ -136,17 +190,25 @@ export async function resolveTarget(
                     height: Math.round(hitRect.height),
                   },
                   candidateCount: candidates.length,
-                };
+                } };
               }
             }
             node = node.parentElement;
             level++;
           }
         }
-        return null; // candidates exist but nothing visible
-      }, spec);
+        return { raw: null }; // candidates exist but nothing visible
+      }, spec2);
 
-      if (r !== null) return r;
+      if (r.invalid) {
+        // Invalid CSS — one retry as a plain text match, else fail fast.
+        if (spec2.kind === 'css' && !spec2.original.startsWith('css:')) {
+          spec2 = { ...spec2, kind: 'text', value: spec2.original };
+          continue;
+        }
+        throw new Error(`Invalid selector: "${spec2.value}"`);
+      }
+      if (r.raw !== null) return r.raw;
       if (Date.now() + 250 > deadline) return null;
       await new Promise(res => setTimeout(res, 250));
     }
@@ -155,7 +217,7 @@ export async function resolveTarget(
   if (!raw) {
     throw new Error(
       `Could not resolve a visible click target for "${target}" ` +
-      `(kind=${spec.kind}). If it's a text match, verify with 'browser find "${spec.value}"'.`
+      `(kind=${spec2.kind}). If it's a text match, verify with 'browser find "${spec2.value}"'.`
     );
   }
 
