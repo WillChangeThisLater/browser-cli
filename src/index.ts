@@ -11,6 +11,7 @@ import { createSession, Session } from './session';
 import { withTimeout } from './utils/timeout';
 import { go } from './commands/go';
 import { click } from './commands/click';
+import { aim } from './commands/aim';
 import { type } from './commands/type';
 import { screenshot } from './commands/screenshot';
 import { evalJs } from './commands/eval';
@@ -76,6 +77,8 @@ program
   .option('--url <url>', 'Navigate first')
   .option('--tab <id>', 'Target specific tab')
   .option('--wait <ms>', 'Wait after click', '0')
+  .option('--exact', 'Exact match for text:/aria: targets (default: substring)', false)
+  .option('--verify <js>', 'JS expression evaluated after the click; result returned as `verify`')
   .option('--timeout <ms>', 'Operation timeout', undefined)
   .action(async (selector: string, options: any) => {
     const opts = program.opts();
@@ -98,6 +101,43 @@ program
       }
     } catch (error: any) {
       console.error(`[click] Failed: ${error.message}`);
+      console.log(JSON.stringify({ success: false, error: error.message }));
+      process.exit(2);
+    }
+  });
+
+// aim command
+program
+  .command('aim <target> <path>')
+  .description('Visualize where a click would land: inject a crosshair at the resolved target and screenshot (no click)')
+  .option('--url <url>', 'Navigate first')
+  .option('--tab <id>', 'Target specific tab')
+  .option('--exact', 'Exact match for text:/aria: targets (default: substring)', false)
+  .option('--full-page', 'Capture full page instead of viewport', false)
+  .option('--type <type>', 'Image type', 'png')
+  .option('--quality <number>', 'JPEG quality', '80')
+  .option('--timeout <ms>', 'Operation timeout', undefined)
+  .action(async (target: string, path: string, options: any) => {
+    const opts = program.opts();
+    const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '', 10);
+    const timeout = options.timeout ? parseInt(options.timeout) : parseInt(opts.timeout || '30000');
+
+    try {
+      const session = await withTimeout(createSession({
+        headless: opts.headless,
+        slowMo: parseInt(opts.slowMo),
+        port: port || undefined,
+        ws: opts.ws,
+        tabId: options.tab,
+      }), timeout, 'Session creation');
+
+      try {
+        await aim(session.page, target, path, { ...options, timeout });
+      } finally {
+        await session.close();
+      }
+    } catch (error: any) {
+      console.error(`[aim] Failed: ${error.message}`);
       console.log(JSON.stringify({ success: false, error: error.message }));
       process.exit(2);
     }
@@ -441,7 +481,7 @@ Examples:
   BROWSER_PORT=9222 browser tabs                    # Use env variable
 
 Output:
-  {"success":true,"tabs":[{"id":"...","title":"...","url":"...","type":"page"},...]}
+  {"success":true,"tabs":[{"id":"...","title":"...","url":"...","type":"page","created":1234567890},...]}
 `)
   .action(async () => {
     const opts = program.opts();
@@ -467,6 +507,7 @@ Output:
           title: tab.title,
           url: tab.url,
           type: tab.type,
+          created: tab.created, // Chrome JSON API provides this field (epoch timestamp)
         }));
       
       console.log(JSON.stringify({
