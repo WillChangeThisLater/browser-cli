@@ -225,9 +225,20 @@ browser type <selector> <text> --clear --enter
 ### Click
 
 ```bash
-browser click <selector>
+browser click <target>              # target: css:<sel> (or bare selector), text:<substring>, aria:<label>
+browser click "text:Save" --verify "document.querySelector('form') === null"
+browser click "css:#cb" --tab <tab-id>   # hidden elements resolve to their visible ancestor hit-target
 
-# JavaScript click (alternative)
+# Preview where a click would land (no click): crosshair screenshot + rect/center JSON
+browser aim "text:Submit" /tmp/aim.png --tab <tab-id>
+```
+
+`click` uses trusted CDP input events at the resolved element's center, so framework event handlers
+(React etc.) observe it — unlike synthetic `el.click()`, which such apps may ignore or revert.
+Prefer it over the eval-based JS click below:
+
+```bash
+# Synthetic JS click (fallback only — frameworks may revert these)
 browser eval "(async () => { const link = document.querySelector('a'); if (link) link.click(); })"
 ```
 

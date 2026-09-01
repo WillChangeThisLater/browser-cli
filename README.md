@@ -51,9 +51,9 @@ Options:
 Commands:
   go [options] <url>                Navigate to URL (creates new tab, or use
                                     --tab to navigate existing)
-  click [options] <selector>        Click element (optionally navigate first
-                                    with --url, or use --tab for existing
-                                    tab)
+  click [options] <target>          Click element (css:/text:/aria: targets, trusted input events,
+                                    --verify <js> post-click check; --tab for existing tab)
+  aim [options] <target> <path>     Screenshot with crosshair at click point, no click
   type [options] <selector> <text>  Type text into input (optionally navigate
                                     first with --url, or use --tab for existing
                                     tab)
