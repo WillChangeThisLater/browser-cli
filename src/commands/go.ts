@@ -4,6 +4,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 
 export interface GoOptions {
   waitLoadState?: 'domcontentloaded' | 'networkidle0' | 'networkidle2' | 'load';
@@ -61,14 +62,13 @@ export async function go(page: Page, url: string, options: GoOptions = {}): Prom
     const elapsed = Date.now() - startTime;
     const endTs = new Date().toISOString();
     console.error(`[${endTs}] [go] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
       url: targetUrl,
       elapsed,
       startTime: startTs,
-      endTime: endTs,
-    }));
-    process.exit(2);
+      endTime: endTs
+    }, 2);
   }
 }

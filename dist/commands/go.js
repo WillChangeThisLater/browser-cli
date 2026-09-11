@@ -5,6 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.go = go;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 async function go(page, url, options = {}) {
     const waitLoadState = options.waitLoadState || 'domcontentloaded';
     const timeout = options.timeout || 120000;
@@ -48,15 +49,14 @@ async function go(page, url, options = {}) {
         const elapsed = Date.now() - startTime;
         const endTs = new Date().toISOString();
         console.error(`[${endTs}] [go] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
             url: targetUrl,
             elapsed,
             startTime: startTs,
-            endTime: endTs,
-        }));
-        process.exit(2);
+            endTime: endTs
+        }, 2);
     }
 }
 //# sourceMappingURL=go.js.map

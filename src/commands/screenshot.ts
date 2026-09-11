@@ -4,6 +4,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -166,12 +167,11 @@ export async function screenshot(page: Page, outputPath: string, options: Screen
   } catch (error: any) {
     const elapsed = Date.now() - startTime;
     console.error(`[screenshot] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
       outputPath,
-      elapsed,
-    }));
-    process.exit(2);
+      elapsed
+    }, 2);
   }
 }

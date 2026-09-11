@@ -5,6 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scroll = scroll;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 async function scroll(page, options = {}) {
     const url = options.url;
     const direction = options.direction;
@@ -107,12 +108,11 @@ async function scroll(page, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[scroll] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=scroll.js.map

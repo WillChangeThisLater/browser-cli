@@ -9,6 +9,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 
 export interface FindOptions {
   url?: string;
@@ -166,11 +167,10 @@ export async function find(page: Page, text: string, options: FindOptions = {}):
   } catch (error: any) {
     const elapsed = Date.now() - startTime;
     console.error(`[find] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
-      elapsed,
-    }));
-    process.exit(2);
+      elapsed
+    }, 2);
   }
 }

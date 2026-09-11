@@ -74,6 +74,30 @@ Commands:
   help [command]                    display help for command
 ```
 
+## Output contract
+
+Every command emits JSON on stdout. Success: `{"success":true,...}`. Failure:
+exactly one `{"success":false,"error":"...",...}` line on stdout and a nonzero
+exit code (2 for runtime failures, 1 for usage/parse failures). stderr carries
+human-readable `[cmd]` diagnostic logs — pipe it away freely; the JSON line is
+the machine contract. `--help` / `--version` pass through untouched. Note:
+catchable-but-unhandled crashes (async rejections) are covered best-effort;
+SIGKILL/OOM can't emit JSON.
+
+Parse failures (missing/unknown options) are JSON too:
+
+```
+$ browser close --port 9222
+{"success":false,"error":"missing required option --tab <id> (or --all)","usage":"browser close --tab <id> [--port N] | browser close --all [--port N]"}
+```
+
+`close` accepts `--all` (close every page tab) and unambiguous prefixes of tab
+ids; it verifies the tab exists instead of reporting success for tabs that
+don't. Ambiguous prefixes fail with the matching tabs listed.
+
+Click failures name the stage that stalled ('Target resolution', 'Mouse click',
+'Verify evaluation', ...) so timeouts are attributable.
+
 ## Quick Start
 
 ```bash

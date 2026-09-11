@@ -4,6 +4,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 
 export interface InspectOptions {
   url?: string;
@@ -349,11 +350,10 @@ export async function inspect(page: Page, selector: string | undefined, options:
   } catch (error: any) {
     const elapsed = Date.now() - startTime;
     console.error(`[inspect] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
-      elapsed,
-    }));
-    process.exit(2);
+      elapsed
+    }, 2);
   }
 }

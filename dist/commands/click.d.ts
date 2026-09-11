@@ -6,6 +6,11 @@
  * click surface), scrolls it into view, and clicks its center using
  * trusted CDP input events (page.mouse), so framework event handlers
  * (React etc.) reliably observe the click — unlike synthetic el.click().
+ *
+ * Timeouts are per-stage and labeled ('Navigation', 'Target resolution',
+ * 'Mouse click', 'Verify evaluation', 'Title evaluation') so a failed click
+ * reports WHICH stage stalled; the outer 'Click operation' withTimeout is a
+ * safety net only.
  */
 import { Page } from 'puppeteer-core';
 export interface ClickOptions {

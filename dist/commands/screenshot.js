@@ -38,6 +38,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.screenshot = screenshot;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 async function screenshot(page, outputPath, options = {}) {
@@ -168,13 +169,12 @@ async function screenshot(page, outputPath, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[screenshot] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
             outputPath,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=screenshot.js.map

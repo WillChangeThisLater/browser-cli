@@ -6,9 +6,10 @@
  * Agent-optimized browser automation via Puppeteer.
  */
 
-import { Command } from 'commander';
+import { Command, CommanderError } from 'commander';
 import { createSession, Session } from './session';
 import { withTimeout } from './utils/timeout';
+import { CliError, fail, installProcessHandlers } from './utils/cli';
 import { go } from './commands/go';
 import { click } from './commands/click';
 import { aim } from './commands/aim';
@@ -21,7 +22,28 @@ import { find } from './commands/find';
 
 const program = new Command();
 
+installProcessHandlers();
+
+/**
+ * Single failure exit path for command actions. Runs after the action's
+ * `finally { session.close() }`, so cleanup has already happened.
+ * CliError payloads (from command implementations) are preserved verbatim.
+ */
+function commandError(cmd: string, error: unknown): never {
+  const message = error instanceof Error ? error.message : String(error);
+  const log = `[${cmd}] Failed: ${message}`;
+  if (error instanceof CliError) fail(error.exitCode, error.payload, log);
+  fail(2, { error: message }, log);
+}
+
 import { waitFor } from './commands/wait-for';
+// Usage failures must also honor the JSON contract (see utils/cli.ts). NOTE:
+// exitOverride must be installed BEFORE commands are registered — children copy
+// settings at registration time, so a late override leaves them calling
+// process.exit directly. Help and version pass through untouched: commander
+// writes their output itself before invoking the override, and exitCode 0
+// means "not a failure".
+program.exitOverride();
 program
   .name('browser')
   .description('Agent-optimized browser automation CLI')
@@ -64,9 +86,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[go] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('go', error);
     }
   });
 
@@ -100,9 +120,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[click] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('click', error);
     }
   });
 
@@ -137,9 +155,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[aim] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('aim', error);
     }
   });
 
@@ -173,9 +189,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[type] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('type', error);
     }
   });
 
@@ -214,9 +228,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[screenshot] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('screenshot', error);
     }
   });
 
@@ -249,9 +261,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[eval] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('eval', error);
     }
   });
 
@@ -286,9 +296,7 @@ program
       }
       process.exit(0);
     } catch (error: any) {
-      console.error(`[inspect] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('inspect', error);
     }
   });
 
@@ -322,9 +330,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[scroll] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('scroll', error);
     }
   });
 
@@ -360,9 +366,7 @@ program
       }
       process.exit(0);
     } catch (error: any) {
-      console.error(`[find] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('find', error);
     }
   });
 
@@ -401,9 +405,7 @@ program
       }
       process.exit(0);
     } catch (error: any) {
-      console.error(`[wait-for] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('wait-for', error);
     }
   });
 
@@ -433,9 +435,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[back] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('back', error);
     }
   });
 
@@ -465,9 +465,7 @@ program
         await session.close();
       }
     } catch (error: any) {
-      console.error(`[forward] Failed: ${error.message}`);
-      console.log(JSON.stringify({ success: false, error: error.message }));
-      process.exit(2);
+      commandError('forward', error);
     }
   });
 
@@ -527,43 +525,80 @@ Output:
 // close command
 program
   .command('close')
-  .description('Close a tab in a Chrome instance')
-  .requiredOption('--tab <id>', 'Tab ID to close')
+  .description('Close a tab (or all tabs with --all) in a Chrome instance')
+  .option('--tab <id>', 'Tab ID to close')
+  .option('--all', 'Close all page tabs (agents: use for cleaning up tabs YOU opened)')
   .addHelpText('after', `
 Examples:
   browser close --tab abc123 --port 9222            # Close specific tab
+  browser close --all --port 9222                   # Close every page tab
 
 Output:
   {"success":true,"tabId":"abc123","action":"closed"}
+  {"success":false,"error":"Tab abc123 not found. Run 'browser tabs' to list tabs."}
 `)
   .action(async (options: any) => {
     const opts = program.opts();
     const port = opts.port ? parseInt(opts.port) : parseInt(process.env.BROWSER_PORT || '0');
     const host = opts.host || 'localhost';
-    
+
     if (!port) {
-      console.log(JSON.stringify({
-        success: false,
-        error: '--port or BROWSER_PORT required',
-      }));
-      process.exit(1);
+      fail(1, { error: '--port or BROWSER_PORT required' });
     }
-    
+    if (!options.tab && !options.all) {
+      fail(1, { error: "missing required option --tab <id> (or --all)", usage: 'browser close --tab <id> [--port N] | browser close --all [--port N]' });
+    }
+
     try {
-      await fetch(`http://${host}:${port}/json/close/${options.tab}`);
+      // Verify against the real tab list: /json/close always answers 200, so a
+      // wrong tab id must be caught here, not reported as success.
+      const tabsResponse = await fetch(`http://${host}:${port}/json`);
+      const tabs = (await tabsResponse.json()) as any[];
+      const pageTabs = tabs.filter((t) => t.type === 'page');
+
+      if (options.all) {
+        for (const tab of pageTabs) {
+          await fetch(`http://${host}:${port}/json/close/${tab.id}`);
+        }
+        console.log(JSON.stringify({ success: true, action: 'closed-all', closed: pageTabs.length }));
+        process.exit(0);
+      }
+
+      const matches = pageTabs.filter((t) => t.id === options.tab || t.id.startsWith(options.tab));
+      if (matches.length === 0) {
+        fail(2, { error: `Tab ${options.tab} not found. Run 'browser tabs --port ${port}' to list tabs.`, tabId: options.tab });
+      }
+      if (matches.length > 1) {
+        fail(2, {
+          error: `Tab id prefix '${options.tab}' is ambiguous — ${matches.length} tabs match. Use a longer prefix.`,
+          matches: matches.map((t) => ({ id: t.id, title: t.title, url: t.url })),
+        });
+      }
+      const target = matches[0]!;
+      if (target.id !== options.tab) {
+        console.error(`[close] Tab id prefix '${options.tab}' resolved to ${target.id}`);
+      }
+      await fetch(`http://${host}:${port}/json/close/${target.id}`);
       console.log(JSON.stringify({
         success: true,
-        tabId: options.tab,
+        tabId: target.id,
         action: 'closed',
       }));
+      process.exit(0);
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error);
-      console.log(JSON.stringify({
-        success: false,
-        error: msg,
-      }));
-      process.exit(1);
+      fail(2, { error: msg });
     }
   });
 
-program.parse();
+// Help and version pass through untouched: commander writes their output itself
+// before invoking the override, and exitCode 0 means "not a failure".
+try {
+  program.parse();
+} catch (error: any) {
+  if (error instanceof CommanderError) {
+    if (error.exitCode === 0) process.exit(0);
+    fail(1, { error: error.message, usage: `browser ${process.argv[2] ?? ''} --help` });
+  }
+  throw error;
+}

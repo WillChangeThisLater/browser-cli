@@ -12,6 +12,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 import * as fs from 'fs';
 import * as path from 'path';
 import { resolveTarget } from '../utils/target';
@@ -120,12 +121,11 @@ export async function aim(page: Page, target: string, outputPath: string, option
     try { await page.evaluate((id: string) => { document.getElementById(id)?.remove(); }, MARKER_ID); } catch {}
     const elapsed = Date.now() - startTime;
     console.error(`[aim] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
       target,
-      elapsed,
-    }));
-    process.exit(2);
+      elapsed
+    }, 2);
   }
 }
