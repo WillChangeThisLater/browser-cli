@@ -7,10 +7,16 @@
  * click surface), scrolls it into view, and clicks its center using
  * trusted CDP input events (page.mouse), so framework event handlers
  * (React etc.) reliably observe the click — unlike synthetic el.click().
+ *
+ * Timeouts are per-stage and labeled ('Navigation', 'Target resolution',
+ * 'Mouse click', 'Verify evaluation', 'Title evaluation') so a failed click
+ * reports WHICH stage stalled; the outer 'Click operation' withTimeout is a
+ * safety net only.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.click = click;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 const target_1 = require("../utils/target");
 async function click(page, selector, options = {}) {
     const url = options.url;
@@ -33,8 +39,10 @@ async function click(page, selector, options = {}) {
             console.error(`[click] Resolved: matched <${resolved.matched.tag}>, hit-target <${resolved.hitTarget.tag}> ` +
                 `(via ${resolved.hitTarget.via}${resolved.hitTarget.level ? `, +${resolved.hitTarget.level}` : ''}) ` +
                 `at (${resolved.center.x}, ${resolved.center.y})`);
-            // Trusted input click at the hit-target center.
-            await page.mouse.click(resolved.center.x, resolved.center.y);
+            // Trusted input click at the hit-target center. Small dedicated deadline:
+            // if the click dispatch itself stalls, the error names this stage instead
+            // of surfacing as an anonymous 'Click operation timeout'.
+            await (0, timeout_1.withTimeout)(page.mouse.click(resolved.center.x, resolved.center.y), 5000, 'Mouse click');
             if (wait > 0) {
                 console.error(`[click] Waiting ${wait}ms`);
                 await new Promise(resolve => setTimeout(resolve, wait));
@@ -42,7 +50,7 @@ async function click(page, selector, options = {}) {
             let verifyResult = undefined;
             if (options.verify) {
                 try {
-                    const r = await page.evaluate(`(() => { ${options.verify.startsWith('return') || options.verify.includes(';') ? options.verify : `return (${options.verify});`} })()`);
+                    const r = await (0, timeout_1.withTimeout)(page.evaluate(`(() => { ${options.verify.startsWith('return') || options.verify.includes(';') ? options.verify : `return (${options.verify});`} })()`), 5000, 'Verify evaluation');
                     verifyResult = r;
                 }
                 catch (e) {
@@ -50,7 +58,7 @@ async function click(page, selector, options = {}) {
                 }
             }
             const pageUrl = page.url();
-            const title = await page.evaluate(() => document.title);
+            const title = await (0, timeout_1.withTimeout)(page.evaluate(() => document.title), 5000, 'Title evaluation');
             // Get actual Chrome tab ID via CDP
             const client = await page.target().createCDPSession();
             const { targetInfo } = await client.send('Target.getTargetInfo');
@@ -79,13 +87,12 @@ async function click(page, selector, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[click] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
             selector,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=click.js.map

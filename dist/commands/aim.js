@@ -46,6 +46,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.aim = aim;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const target_1 = require("../utils/target");
@@ -135,13 +136,12 @@ async function aim(page, target, outputPath, options = {}) {
         catch { }
         const elapsed = Date.now() - startTime;
         console.error(`[aim] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
             target,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=aim.js.map

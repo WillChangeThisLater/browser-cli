@@ -5,6 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inspect = inspect;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 async function inspect(page, selector, options = {}) {
     const url = options.url;
     const all = options.all ?? false;
@@ -282,12 +283,11 @@ async function inspect(page, selector, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[inspect] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=inspect.js.map

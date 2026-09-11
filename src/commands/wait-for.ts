@@ -9,6 +9,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 
 export interface WaitForOptions {
   url?: string;
@@ -71,12 +72,11 @@ export async function waitFor(page: Page, selector: string, options: WaitForOpti
   } catch (error: any) {
     const elapsed = Date.now() - startTime;
     console.error(`[wait-for] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
       selector,
-      elapsed,
-    }));
-    process.exit(2);
+      elapsed
+    }, 2);
   }
 }

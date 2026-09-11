@@ -4,6 +4,7 @@
 
 import { Page } from 'puppeteer-core';
 import { withTimeout } from '../utils/timeout';
+import { CliError } from '../utils/cli';
 
 export interface ScrollOptions {
   url?: string;
@@ -126,11 +127,10 @@ export async function scroll(page: Page, options: ScrollOptions = {}): Promise<v
   } catch (error: any) {
     const elapsed = Date.now() - startTime;
     console.error(`[scroll] Failed after ${elapsed}ms: ${error.message}`);
-    console.log(JSON.stringify({
+    throw new CliError({
       success: false,
       error: error.message,
-      elapsed,
-    }));
-    process.exit(2);
+      elapsed
+    }, 2);
   }
 }

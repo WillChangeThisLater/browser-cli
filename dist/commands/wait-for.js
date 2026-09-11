@@ -10,6 +10,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.waitFor = waitFor;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 async function waitFor(page, selector, options = {}) {
     const url = options.url;
     const visible = options.visible ?? true;
@@ -56,13 +57,12 @@ async function waitFor(page, selector, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[wait-for] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
             selector,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=wait-for.js.map

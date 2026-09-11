@@ -5,6 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.type = type;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 async function type(page, selector, text, options = {}) {
     const url = options.url;
     const clear = options.clear ?? false;
@@ -87,14 +88,13 @@ async function type(page, selector, text, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[type] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
             selector,
             text,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=type.js.map

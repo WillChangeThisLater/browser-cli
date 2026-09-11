@@ -5,6 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.evalJs = evalJs;
 const timeout_1 = require("../utils/timeout");
+const cli_1 = require("../utils/cli");
 async function evalJs(page, code, options = {}) {
     const url = options.url;
     const json = options.json ?? false;
@@ -50,12 +51,11 @@ async function evalJs(page, code, options = {}) {
     catch (error) {
         const elapsed = Date.now() - startTime;
         console.error(`[eval] Failed after ${elapsed}ms: ${error.message}`);
-        console.log(JSON.stringify({
+        throw new cli_1.CliError({
             success: false,
             error: error.message,
-            elapsed,
-        }));
-        process.exit(2);
+            elapsed
+        }, 2);
     }
 }
 //# sourceMappingURL=eval.js.map
